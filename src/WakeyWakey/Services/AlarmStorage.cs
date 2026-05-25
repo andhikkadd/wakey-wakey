@@ -2,15 +2,15 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text.Json;
-using SolveAlarm.Models;
+using WakeyWakey.Models;
 
-namespace SolveAlarm.Services
+namespace WakeyWakey.Services
 {
     public class AlarmStorage
     {
         private static readonly string AppDataPath = Path.Combine(
             Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
-            "SolveAlarm"
+            "WakeyWakey"
         );
 
         private static readonly string FilePath = Path.Combine(AppDataPath, "alarms.json");

@@ -1,7 +1,7 @@
-<Application x:Class="SolveAlarm.App"
+<Application x:Class="WakeyWakey.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:local="clr-namespace:SolveAlarm">
+             xmlns:local="clr-namespace:WakeyWakey">
     <Application.Resources>
         <!-- Modern ScrollBar style and application-wide styles can be added here if needed -->
     </Application.Resources>

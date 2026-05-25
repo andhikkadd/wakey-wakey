@@ -8,10 +8,10 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Threading;
-using SolveAlarm.Models;
-using SolveAlarm.Services;
+using WakeyWakey.Models;
+using WakeyWakey.Services;
 
-namespace SolveAlarm.Views
+namespace WakeyWakey.Views
 {
     public partial class AlarmWindow : Window
     {
@@ -239,7 +239,7 @@ namespace SolveAlarm.Views
                 }
             }
 
-            MessageBox.Show("Good morning! Alarm dismissed.", "SolveAlarm", MessageBoxButton.OK, MessageBoxImage.Information);
+            MessageBox.Show("Good morning! Alarm dismissed.", "WakeyWakey", MessageBoxButton.OK, MessageBoxImage.Information);
             CloseWindowSafely();
         }
 

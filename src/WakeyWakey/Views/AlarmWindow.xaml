@@ -1,10 +1,10 @@
-<Window x:Class="SolveAlarm.Views.AlarmWindow"
+<Window x:Class="WakeyWakey.Views.AlarmWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
-        Title="SolveAlarm - Alarm Triggered"
+        Title="WakeyWakey - Alarm Triggered"
         WindowStyle="None"
         ResizeMode="NoResize"
         WindowState="Maximized"
@@ -183,7 +183,7 @@
             </Border>
 
             <!-- Safety notice -->
-            <TextBlock Grid.Row="2" Text="SolveAlarm Personal Productivity Tool" Foreground="#475569" FontSize="11" HorizontalAlignment="Center" Margin="0,30,0,0"/>
+            <TextBlock Grid.Row="2" Text="WakeyWakey Personal Productivity Tool" Foreground="#475569" FontSize="11" HorizontalAlignment="Center" Margin="0,30,0,0"/>
         </Grid>
     </Grid>
 </Window>

@@ -2,14 +2,14 @@ using System;
 using System.Linq;
 using System.Threading;
 using System.Windows;
-using SolveAlarm.Views;
+using WakeyWakey.Views;
 
-namespace SolveAlarm
+namespace WakeyWakey
 {
     public partial class App : Application
     {
         private static Mutex? _mutex;
-        private const string MutexName = "Global\\SolveAlarmMutex";
+        private const string MutexName = "Global\\WakeyWakeyMutex";
 
         protected override void OnStartup(StartupEventArgs e)
         {

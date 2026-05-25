@@ -4,11 +4,11 @@ using System.Diagnostics;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
-using SolveAlarm.Models;
-using SolveAlarm.Services;
-using SolveAlarm.Views;
+using WakeyWakey.Models;
+using WakeyWakey.Services;
+using WakeyWakey.Views;
 
-namespace SolveAlarm
+namespace WakeyWakey
 {
     public partial class MainWindow : Window
     {
@@ -17,7 +17,7 @@ namespace SolveAlarm
         public MainWindow()
         {
             InitializeComponent();
-            this.Title = "SolveAlarm Dashboard"; // Hardcoded to match FindWindow title in Mutex check!
+            this.Title = "WakeyWakey Dashboard"; // Hardcoded to match FindWindow title in Mutex check!
             
             // Clean up any stale Scheduler tasks on startup that might have been deleted from JSON
             SyncTasksWithDatabase();

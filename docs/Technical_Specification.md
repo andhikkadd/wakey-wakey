@@ -1,12 +1,12 @@
-# Technical Specification: SolveAlarm (Revised)
+# Technical Specification: WakeyWakey (Revised)
 
-SolveAlarm is a strict, native Windows desktop alarm application built with **C# .NET 8** and **WPF**. It enables users to create alarms that wake the computer from sleep and play a custom sound at full volume. The alarm can only be dismissed by successfully solving a math challenge.
+WakeyWakey is a strict, native Windows desktop alarm application built with **C# .NET 8** and **WPF**. It enables users to create alarms that wake the computer from sleep and play a custom sound at full volume. The alarm can only be dismissed by successfully solving a math challenge.
 
 ---
 
 ## 1. Executive Summary
 
-SolveAlarm provides a reliable solution for heavy sleepers. By combining Windows Task Scheduler (to wake the system and trigger the alarm) and native Windows Core Audio APIs (to lock volume at 100%), the application ensures the alarm is heard. The application enforces a fullscreen, topmost dismiss screen that cannot be easily closed without completing a customizable math challenge (Easy, Medium, Hard) with a streak of 3 consecutive correct answers.
+WakeyWakey provides a reliable solution for heavy sleepers. By combining Windows Task Scheduler (to wake the system and trigger the alarm) and native Windows Core Audio APIs (to lock volume at 100%), the application ensures the alarm is heard. The application enforces a fullscreen, topmost dismiss screen that cannot be easily closed without completing a customizable math challenge (Easy, Medium, Hard) with a configurable streak of consecutive correct answers.
 
 ---
 
@@ -48,10 +48,10 @@ SolveAlarm provides a reliable solution for heavy sleepers. By combining Windows
    - Show a clear warning indicator in the normal UI if an alarm's custom sound path is invalid.
 8. **Math Challenge Engine**:
    - Generate math questions based on chosen difficulty:
-     - **Easy**: e.g., `A + B` or `A - B` (numbers 10-99).
-     - **Medium**: e.g., `(A + B) * C` or `A * B - C` (numbers 2-20).
-     - **Hard**: e.g., `(A - B) * (C + D)` or `A * B + C - D`.
-   - Enforce 3 consecutive correct answers. A single incorrect answer resets the streak to 0.
+     - **Easy**: e.g., `A + B` or `A - B` (numbers 1-20).
+     - **Medium**: e.g., `(A + B) * C` or `A * B - C` (numbers 2-12).
+     - **Hard**: Two-step arithmetic operations with parentheses.
+   - Enforce configurable consecutive correct answers. A single incorrect answer resets the streak to 0.
 9. **Normal GUI**:
    - Modern, glassmorphism-styled dashboard showing all alarms.
    - Toggle buttons to enable/disable alarms.
@@ -88,11 +88,11 @@ graph TD
 - **JSON Storage**: `System.Text.Json`
 - **UI Design**: Modern WPF styling (custom controls, acrylic-like transparency/glassmorphism, clean dark mode, Outfit/Inter typography).
 
-### 3.2 Key Projects/Components inside `app_build/`:
-- **`SolveAlarm`** (WPF Executable)
-  - `Program.cs` / `App.xaml.cs`: Custom entry point checking for arguments,Mutex logic.
+### 3.2 Key Projects/Components inside `src/`:
+- **`WakeyWakey`** (WPF Executable)
+  - `App.xaml.cs`: Custom entry point checking for arguments, Mutex logic.
   - `Models/Alarm.cs`: Alarm metadata and JSON serialization properties.
-  - `Services/AlarmStorage.cs`: Saving/loading alarms from `%APPDATA%\SolveAlarm\alarms.json`.
+  - `Services/AlarmStorage.cs`: Saving/loading alarms from `%APPDATA%\WakeyWakey\alarms.json`.
   - `Services/SchedulerService.cs`: Interacting with Windows Task Scheduler COM APIs to register wake-up tasks.
   - `Services/AudioService.cs`: NAudio wrapper to play alarm sound and force 100% volume/unmute via WASAPI endpoints.
   - `Services/MathChallenge.cs`: Engine generating problems and validating streaks.
@@ -115,7 +115,7 @@ protected override void OnStartup(StartupEventArgs e)
     
     if (!isTriggerMode)
     {
-        _mutex = new Mutex(true, "Global\\SolveAlarmMutex", out bool createdNew);
+        _mutex = new Mutex(true, "Global\\WakeyWakeyMutex", out bool createdNew);
         if (!createdNew)
         {
             // Bring existing window to front (using Win32 API FindWindow and SetForegroundWindow)
@@ -131,15 +131,15 @@ protected override void OnStartup(StartupEventArgs e)
 
 ### 4.2 Task Scheduler Registration & Wake Timers
 To wake the computer, a task is created:
-- **Action**: Run `SolveAlarm.exe` with arguments `--trigger-alarm <guid>`.
+- **Action**: Run `WakeyWakey.exe` with arguments `--trigger-alarm <guid>`.
 - **Trigger**: Matching the calculated next occurrence.
 - **Settings**:
   - `WakeToRun = true` (tells Windows to wake the computer from sleep).
   - `RunOnlyIfNetworkAvailable = false`.
   - `DisallowStartIfOnBatteries = false`.
   - `StopIfGoingOnBatteries = false`.
-  - `Priority = ThreadPriorityLevel.Highest`.
-  - Task name pattern: `SolveAlarm_Alarm_<guid>`.
+  - `Priority = ProcessPriorityClass.High`.
+  - Task name pattern: `WakeyWakey_Alarm_<guid>`.
 
 ### 4.3 Windows Wake Troubleshooting (README Checklist)
 We will document the following settings in the `README.md`:
@@ -155,17 +155,3 @@ We will document the following settings in the `README.md`:
 - **Glassmorphism**: Use semi-transparent borders with a blur/acrylic look.
 - **Typography**: Clear, modern, sans-serif font.
 - **Animations**: Fade-in transitions for the challenge state, pulse animations for the correct/incorrect streaks.
-
----
-
-## 6. Implementation Plan & Deliverables
-
-1. **Step 1**: Initialize WPF .NET 8.0 project structure in `app_build/`.
-2. **Step 2**: Implement core models, JSON storage, and math challenge engine.
-3. **Step 3**: Implement Audio controller & Task Scheduler wrapper.
-4. **Step 4**: Design the Fullscreen Alarm Window (trigger/test views) & Main Dashboard UI.
-5. **Step 5**: Integrate all parts, perform audit, and package.
-
----
-
-**Do you approve this revised Technical Specification?**

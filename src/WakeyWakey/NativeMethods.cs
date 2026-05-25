@@ -1,7 +1,7 @@
 using System;
 using System.Runtime.InteropServices;
 
-namespace SolveAlarm
+namespace WakeyWakey
 {
     internal static class NativeMethods
     {
@@ -19,7 +19,7 @@ namespace SolveAlarm
 
         public static void BringExistingInstanceToFront()
         {
-            IntPtr hWnd = FindWindow(null, "SolveAlarm Dashboard");
+            IntPtr hWnd = FindWindow(null, "WakeyWakey Dashboard");
             if (hWnd != IntPtr.Zero)
             {
                 ShowWindow(hWnd, SW_RESTORE);

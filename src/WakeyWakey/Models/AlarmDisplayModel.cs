@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.IO;
 using System.Windows;
 using System.Windows.Media;
-using SolveAlarm.Models;
-using SolveAlarm.Services;
+using WakeyWakey.Models;
+using WakeyWakey.Services;
 
-namespace SolveAlarm.Models
+namespace WakeyWakey.Models
 {
     public class AlarmDisplayModel
     {

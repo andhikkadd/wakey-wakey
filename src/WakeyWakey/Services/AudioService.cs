@@ -5,7 +5,7 @@ using System.Threading;
 using NAudio.CoreAudioApi;
 using NAudio.Wave;
 
-namespace SolveAlarm.Services
+namespace WakeyWakey.Services
 {
     public class AudioService : IDisposable
     {

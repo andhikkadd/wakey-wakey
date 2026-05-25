@@ -1,10 +1,10 @@
-# ⏰ SolveAlarm (Release Bundle)
+# ⏰ WakeyWakey (Release Bundle)
 
 [![Platform](https://img.shields.io/badge/Platform-Windows-blue.svg?style=flat-square)](#)
 [![Framework](https://img.shields.io/badge/Framework-.NET%208%20WPF-red.svg?style=flat-square)](#)
 [![License](https://img.shields.io/badge/License-MIT-green.svg?style=flat-square)](#)
 
-SolveAlarm is a strict, native Windows **.NET 8 WPF alarm desktop application** designed specifically for heavy sleepers. Unlike standard alarm apps, SolveAlarm hooks deep into Windows native sub-systems to ensure you **cannot bypass or ignore** your alarm. It wakes your computer from Sleep mode and forces you to solve a streak of mathematical equations to dismiss the alarm.
+WakeyWakey is a strict, native Windows **.NET 8 WPF alarm desktop application** designed specifically for heavy sleepers. Unlike standard alarm apps, WakeyWakey hooks deep into Windows native sub-systems to ensure you **cannot bypass or ignore** your alarm. It wakes your computer from Sleep mode and forces you to solve a streak of mathematical equations to dismiss the alarm.
 
 ---
 
@@ -15,9 +15,9 @@ SolveAlarm is a strict, native Windows **.NET 8 WPF alarm desktop application** 
 | **💤 Wake-from-Sleep** | Automatically schedules task triggers in Windows Task Scheduler using `WakeToRun` property to turn on/wake up the PC from Sleep. | Integrated via COM wrapper `Microsoft.Win32.TaskScheduler`. |
 | **🔒 Anti-Bypass Lock** | Launches a borderless, fullscreen, topmost alarm window that locks system focus. Alt+F4, window minimization, and focus loss are blocked. | Custom Window state-tracking loop. Re-activates/re-focuses window and textbox input immediately. |
 | **🔊 Volume Enforcement** | Forces master system volume to 100% and unmutes every 250ms during an active alarm. | Uses CoreAudio endpoints via `NAudio.CoreAudioApi`. |
-| **🧮 Math Challenges** | Generates dynamic math equations (Easy, Medium, Hard difficulty) requiring a streak of correct answers (up to 3-5 in a row). An incorrect answer resets the streak. | Custom mathematical generation engine in `MathChallenge.cs`. |
+| **🧮 Math Challenges** | Generates dynamic math equations (Easy, Medium, Hard difficulty) requiring a streak of correct answers (up to 3-10 in a row). An incorrect answer resets the streak. | Custom mathematical generation engine in `MathChallenge.cs`. |
 | **🎵 Audio Fail-Safe** | Plays custom `.mp3` or `.wav` sounds, falling back to a custom-synthesized oscillating frequency sweep siren if files are missing or corrupted. | Custom synthesized `AlarmSampleProvider` inside NAudio player. |
-| **📅 Recurrence & State** | Supports one-time and recurring alarms (selected weekdays). Single-instance Mutex ensures only one dashboard runs. | Local JSON storage under `%APPDATA%\SolveAlarm\alarms.json`. |
+| **📅 Recurrence & State** | Supports one-time and recurring alarms (selected weekdays). Single-instance Mutex ensures only one dashboard runs. | Local JSON storage under `%APPDATA%\WakeyWakey\alarms.json`. |
 
 ---
 
@@ -27,11 +27,11 @@ The following flowchart describes the lifecycle of an alarm, from setting it up 
 
 ```mermaid
 graph TD
-    A[SolveAlarm Dashboard] -->|User saves Alarm| B(Save in alarms.json)
+    A[WakeyWakey Dashboard] -->|User saves Alarm| B(Save in alarms.json)
     B --> C[Register Task in Windows Task Scheduler]
     C -->|Sets WakeToRun = True| D[Windows Scheduler Service]
     
-    D -->|Time Reached / PC Wakes Up| E[Execute: SolveAlarm.exe --trigger-alarm ID]
+    D -->|Time Reached / PC Wakes Up| E[Execute: WakeyWakey.exe --trigger-alarm ID]
     E --> F[Launch Topmost Borderless Fullscreen AlarmWindow]
     F --> G[Start NAudio Engine + 250ms Volume Lock Loop]
     
@@ -53,12 +53,12 @@ graph TD
 ## 📋 Installation & Setup
 
 1. **Copy Build Files:**
-   Copy the contents of this folder (`release_build/`) to a permanent folder on your PC (e.g. `C:\Program Files\SolveAlarm\` or `C:\Users\<Name>\AppData\Local\SolveAlarm\`).
+   Copy the contents of this folder (`dist/`) to a permanent folder on your PC (e.g. `C:\Program Files\WakeyWakey\` or `C:\Users\<Name>\AppData\Local\WakeyWakey\`).
 
 2. **Run as Administrator:**
-   Because SolveAlarm interacts with the Windows Task Scheduler to register system tasks, it **must run with administrative privileges**. 
-   * Right-click `SolveAlarm.exe` and select **Run as Administrator**.
-   * *Tip:* Right-click `SolveAlarm.exe` -> **Properties** -> **Compatibility** tab -> Check **Run this program as an administrator** to make this permanent.
+   Because WakeyWakey interacts with the Windows Task Scheduler to register system tasks, it **must run with administrative privileges**. 
+   * Right-click `WakeyWakey.exe` and select **Run as Administrator**.
+   * *Tip:* Right-click `WakeyWakey.exe` -> **Properties** -> **Compatibility** tab -> Check **Run this program as an administrator** to make this permanent.
 
 3. **Desktop Shortcut:**
    Create a shortcut to the application on your Desktop or Pin it to the Taskbar for quick management.
@@ -70,7 +70,7 @@ graph TD
 To guarantee the wake-from-sleep feature wakes up your system, ensure the following Windows configurations are applied:
 
 ### 1. Enable Wake Timers
-1. Click the **Open Power Options** button in the SolveAlarm dashboard (or run `control powercfg.cpl` in Windows).
+1. Click the **Open Power Options** button in the WakeyWakey dashboard (or run `control powercfg.cpl` in Windows).
 2. Click **Change plan settings** next to your active power plan.
 3. Click **Change advanced power settings**.
 4. Scroll to **Sleep** and expand it.
@@ -80,8 +80,8 @@ To guarantee the wake-from-sleep feature wakes up your system, ensure the follow
 > If "Allow wake timers" is disabled, Windows will block the Task Scheduler from waking your computer, and the alarm will not sound until you manually power on the machine.
 
 ### 2. Supported Sleep States
-* SolveAlarm wakes the computer from the **Sleep (S3)** state.
-* **Modern Standby (S0):** Some modern laptops use Modern Standby. SolveAlarm still triggers, but verify hardware compatibility by scheduling a test alarm 2 minutes in the future.
+* WakeyWakey wakes the computer from the **Sleep (S3)** state.
+* **Modern Standby (S0):** Some modern laptops use Modern Standby. WakeyWakey still triggers, but verify hardware compatibility by scheduling a test alarm 2 minutes in the future.
 * **Hibernate / Shut Down:** Wake timers cannot wake up a completely shut down machine or some hibernating laptops (S4) depending on motherboards. Keep the system in **Sleep** mode.
 
 ---
@@ -93,13 +93,13 @@ When configuring an alarm, you can choose from three difficulty tiers. Solving a
 ### 🟢 Easy
 * **Operations:** Addition (+) and Subtraction (-)
 * **Number Range:** `1` to `20`
-* **Streak Required:** `2` correct answers
+* **Streak Required:** Configurable (`2` by default)
 * *Example:* `12 + 7` or `18 - 9`
 
 ### 🟡 Medium
 * **Operations:** Addition (+), Subtraction (-), and Single multiplication (*)
 * **Number Range:** `2` to `12` (Multiplication uses factors `2` to `9`)
-* **Streak Required:** `3` correct answers
+* **Streak Required:** Configurable (`3` by default)
 * *Example:* `8 * 7` or `12 + 11`
 
 ### 🔴 Hard
@@ -110,14 +110,14 @@ When configuring an alarm, you can choose from three difficulty tiers. Solving a
   * `A * B + C`
   * `A * B - C`
 * **Number Range:** `2` to `15` (Multipliers `2` to `10`)
-* **Streak Required:** `3` correct answers
+* **Streak Required:** Configurable (`3` by default)
 * *Example:* `(7 + 5) * 8` or `12 * 9 - 14`
 
 ---
 
 ## 💻 Command Line Arguments
 
-For advanced users or custom scripting, `SolveAlarm.exe` supports several command-line flags:
+For advanced users or custom scripting, `WakeyWakey.exe` supports several command-line flags:
 
 * `--trigger-alarm <alarm-guid>`: Automatically launches the fullscreen, locked alarm window for the specified alarm configuration.
 * `--test-alarm`: Opens a safe, non-locked test window. In test mode:
@@ -129,4 +129,4 @@ For advanced users or custom scripting, `SolveAlarm.exe` supports several comman
 
 ## 📜 License
 
-SolveAlarm is open-source software licensed under the [MIT License](LICENSE).
+WakeyWakey is open-source software licensed under the [MIT License](LICENSE).

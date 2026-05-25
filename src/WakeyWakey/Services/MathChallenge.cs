@@ -1,7 +1,7 @@
 using System;
-using SolveAlarm.Models;
+using WakeyWakey.Models;
 
-namespace SolveAlarm.Services
+namespace WakeyWakey.Services
 {
     public class MathQuestion
     {

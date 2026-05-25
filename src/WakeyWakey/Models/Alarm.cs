@@ -1,6 +1,6 @@
 using System;
 
-namespace SolveAlarm.Models
+namespace WakeyWakey.Models
 {
     [Flags]
     public enum DaysOfWeek

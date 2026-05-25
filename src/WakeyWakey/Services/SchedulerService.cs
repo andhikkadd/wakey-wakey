@@ -2,9 +2,9 @@ using System;
 using System.Diagnostics;
 using System.IO;
 using Microsoft.Win32.TaskScheduler;
-using SolveAlarm.Models;
+using WakeyWakey.Models;
 
-namespace SolveAlarm.Services
+namespace WakeyWakey.Services
 {
     public class SchedulerService
     {
@@ -14,7 +14,7 @@ namespace SolveAlarm.Services
             {
                 using (TaskService ts = new TaskService())
                 {
-                    string taskName = $"SolveAlarm_Alarm_{alarm.Id}";
+                    string taskName = $"WakeyWakey_Alarm_{alarm.Id}";
 
                     // If task already exists, delete it first to recreate
                     if (ts.GetTask(taskName) != null)
@@ -28,10 +28,10 @@ namespace SolveAlarm.Services
                     }
 
                     TaskDefinition td = ts.NewTask();
-                    td.RegistrationInfo.Description = $"SolveAlarm: {alarm.Label}";
+                    td.RegistrationInfo.Description = $"WakeyWakey: {alarm.Label}";
 
                     // Set action to run the application with the --trigger-alarm argument
-                    string exePath = Environment.ProcessPath ?? Path.Combine(AppContext.BaseDirectory, "SolveAlarm.exe");
+                    string exePath = Environment.ProcessPath ?? Path.Combine(AppContext.BaseDirectory, "WakeyWakey.exe");
                     
                     // Make sure path is wrapped in quotes in case it contains spaces
                     td.Actions.Add(new ExecAction($"\"{exePath}\"", $"--trigger-alarm {alarm.Id}"));
@@ -85,7 +85,7 @@ namespace SolveAlarm.Services
             {
                 using (TaskService ts = new TaskService())
                 {
-                    string taskName = $"SolveAlarm_Alarm_{alarmId}";
+                    string taskName = $"WakeyWakey_Alarm_{alarmId}";
                     if (ts.GetTask(taskName) != null)
                     {
                         ts.RootFolder.DeleteTask(taskName);

@@ -2,10 +2,10 @@ using System;
 using System.IO;
 using System.Windows;
 using Microsoft.Win32;
-using SolveAlarm.Models;
-using SolveAlarm.Services;
+using WakeyWakey.Models;
+using WakeyWakey.Services;
 
-namespace SolveAlarm.Views
+namespace WakeyWakey.Views
 {
     public partial class AlarmEditDialog : Window
     {
