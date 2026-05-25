@@ -1,0 +1,189 @@
+<Window x:Class="SolveAlarm.Views.AlarmWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        Title="SolveAlarm - Alarm Triggered"
+        WindowStyle="None"
+        ResizeMode="NoResize"
+        WindowState="Maximized"
+        Topmost="True"
+        Background="#0F172A"
+        WindowStartupLocation="CenterScreen"
+        KeyDown="Window_KeyDown"
+        Closing="Window_Closing"
+        Deactivated="Window_Deactivated"
+        StateChanged="Window_StateChanged">
+    
+    <Window.Resources>
+        <!-- Custom styled glassmorphic buttons and inputs -->
+        <Style x:Key="GlassTextBox" TargetType="TextBox">
+            <Setter Property="Background" Value="#1E293B"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="BorderBrush" Value="#475569"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Padding" Value="12"/>
+            <Setter Property="FontSize" Value="24"/>
+            <Setter Property="CaretBrush" Value="#EC4899"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="TextBox">
+                        <Border Name="Border" Background="{TemplateBinding Background}" 
+                                BorderBrush="{TemplateBinding BorderBrush}" 
+                                BorderThickness="{TemplateBinding BorderThickness}" 
+                                CornerRadius="8">
+                            <ScrollViewer x:Name="PART_ContentHost" Margin="0"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsFocused" Value="True">
+                                <Setter TargetName="Border" Property="BorderBrush" Value="#8B5CF6"/>
+                                <Setter TargetName="Border" Property="Background" Value="#0F172A"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="GlassButton" TargetType="Button">
+            <Setter Property="Background" Value="#7C3AED"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="FontSize" Value="20"/>
+            <Setter Property="Padding" Value="16,10"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Name="Border" Background="{TemplateBinding Background}" CornerRadius="8">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="Border" Property="Background" Value="#6D28D9"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="Border" Property="Background" Value="#4C1D95"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="TestExitButton" TargetType="Button">
+            <Setter Property="Background" Value="#1E293B"/>
+            <Setter Property="Foreground" Value="#94A3B8"/>
+            <Setter Property="FontWeight" Value="Medium"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="Padding" Value="12,8"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="BorderBrush" Value="#334155"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Name="Border" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="6">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="Border" Property="Background" Value="#EF4444"/>
+                                <Setter TargetName="Border" Property="BorderBrush" Value="#EF4444"/>
+                                <Setter Property="Foreground" Value="White"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+
+    <Grid>
+        <!-- Dark gradient background -->
+        <Grid.Background>
+            <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                <GradientStop Color="#020617" Offset="0.0"/>
+                <GradientStop Color="#0F172A" Offset="0.5"/>
+                <GradientStop Color="#1E1B4B" Offset="1.0"/>
+            </LinearGradientBrush>
+        </Grid.Background>
+
+        <!-- Test Mode Indicator (Top Right) -->
+        <StackPanel Name="TestModePanel" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="30" Visibility="Collapsed">
+            <TextBlock Text="[ TEST MODE ACTIVE ]" Foreground="#EC4899" FontSize="14" FontWeight="Bold" VerticalAlignment="Center" Margin="0,0,15,0"/>
+            <Button Content="Exit Test (ESC)" Style="{StaticResource TestExitButton}" Click="ExitTest_Click"/>
+        </StackPanel>
+
+        <!-- Main Alarm Layout Container -->
+        <Grid HorizontalAlignment="Center" VerticalAlignment="Center">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <!-- Title & Large Time -->
+            <StackPanel Grid.Row="0" HorizontalAlignment="Center" Margin="0,0,0,40">
+                <Border Background="#311042" BorderBrush="#EC4899" BorderThickness="1" CornerRadius="20" HorizontalAlignment="Center" Padding="15,6" Margin="0,0,0,15">
+                    <StackPanel Orientation="Horizontal">
+                        <Ellipse Width="8" Height="8" Fill="#EC4899" Margin="0,0,8,0">
+                            <Ellipse.Triggers>
+                                <EventTrigger RoutedEvent="Loaded">
+                                    <BeginStoryboard>
+                                        <Storyboard RepeatBehavior="Forever">
+                                            <DoubleAnimation Storyboard.TargetProperty="Opacity" From="0.2" To="1.0" Duration="0:0:0.6" AutoReverse="True"/>
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </EventTrigger>
+                            </Ellipse.Triggers>
+                        </Ellipse>
+                        <TextBlock Text="ALARM ACTIVE" Foreground="#F43F5E" FontWeight="SemiBold" FontSize="14"/>
+                    </StackPanel>
+                </Border>
+                
+                <TextBlock Name="ClockText" Text="07:00" Foreground="White" FontSize="110" FontWeight="Thin" HorizontalAlignment="Center"/>
+                <TextBlock Name="LabelText" Text="Wake Up!" Foreground="#94A3B8" FontSize="20" FontWeight="Light" HorizontalAlignment="Center" Margin="0,5,0,0"/>
+            </StackPanel>
+
+            <!-- Math Challenge Card -->
+            <Border Grid.Row="1" Width="550" Background="#1E293B" BorderBrush="#334155" BorderThickness="1" CornerRadius="16" Padding="40" SnapsToDevicePixels="True">
+                <Border.Effect>
+                    <DropShadowEffect Color="#000000" BlurRadius="40" Opacity="0.4" ShadowDepth="10"/>
+                </Border.Effect>
+                
+                <StackPanel>
+                    <TextBlock Text="Solve the challenge to dismiss the alarm:" Foreground="#94A3B8" FontSize="15" HorizontalAlignment="Center" Margin="0,0,0,25"/>
+
+                    <!-- Streak indicator -->
+                    <StackPanel Name="StreakPanel" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,25">
+                        <!-- Dynamic indicator items created in code-behind -->
+                    </StackPanel>
+
+                    <!-- The math question -->
+                    <TextBlock Name="QuestionText" Text="Loading question..." Foreground="White" FontSize="44" FontWeight="Bold" HorizontalAlignment="Center" Margin="0,0,0,30" TextAlignment="Center"/>
+
+                    <!-- Answer Input -->
+                    <Grid Margin="0,0,0,20">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        
+                        <TextBox Name="AnswerTextBox" Grid.Column="0" Style="{StaticResource GlassTextBox}" Margin="0,0,12,0" 
+                                 KeyDown="AnswerTextBox_KeyDown" HorizontalContentAlignment="Center"/>
+                        
+                        <Button Name="SubmitButton" Grid.Column="1" Content="Submit" Style="{StaticResource GlassButton}" 
+                                Width="120" Click="Submit_Click"/>
+                    </Grid>
+
+                    <!-- Feedback message -->
+                    <TextBlock Name="FeedbackText" Text="" Foreground="#F43F5E" FontSize="15" FontWeight="Medium" HorizontalAlignment="Center"/>
+                </StackPanel>
+            </Border>
+
+            <!-- Safety notice -->
+            <TextBlock Grid.Row="2" Text="SolveAlarm Personal Productivity Tool" Foreground="#475569" FontSize="11" HorizontalAlignment="Center" Margin="0,30,0,0"/>
+        </Grid>
+    </Grid>
+</Window>

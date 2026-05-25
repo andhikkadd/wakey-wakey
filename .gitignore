@@ -1,0 +1,44 @@
+## Core Build Artifacts
+[Bb]in/
+[Oo]bj/
+[Aa]rtifacts/
+[Pp]ublish/
+
+## Visual Studio / Roslyn / MSBuild
+.vs/
+*.user
+*.userosscache
+*.sln.docstates
+*.suo
+*.userprefs
+*.dbmdl
+*.log
+
+## VS Code
+.vscode/
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+.history/
+
+## Rider / JetBrains
+.idea/
+*.sln.iml
+
+## OS-specific / Temp files
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+*.tmp
+*.bak
+
+## Application Logs & Local Configs
+logs/
+*.log
+appsettings.Development.json
+secrets.json
+
+## User specific Alarm data (optional, but good to keep clean)
+alarms.json

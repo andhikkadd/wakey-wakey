@@ -1,0 +1,202 @@
+<Window x:Class="SolveAlarm.Views.AlarmEditDialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        Title="Edit Alarm" Height="500" Width="480"
+        WindowStartupLocation="CenterOwner"
+        Background="#0F172A"
+        Foreground="White"
+        WindowStyle="None"
+        AllowsTransparency="True"
+        BorderBrush="#334155"
+        BorderThickness="1"
+        ResizeMode="NoResize">
+
+    <Window.Resources>
+        <Style x:Key="FormLabel" TargetType="TextBlock">
+            <Setter Property="Foreground" Value="#94A3B8"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Margin" Value="0,0,0,6"/>
+        </Style>
+
+        <Style x:Key="DialogTextBox" TargetType="TextBox">
+            <Setter Property="Background" Value="#1E293B"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="BorderBrush" Value="#334155"/>
+            <Setter Property="Padding" Value="8"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="CaretBrush" Value="#8B5CF6"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="TextBox">
+                        <Border Name="Border" Background="{TemplateBinding Background}" 
+                                BorderBrush="{TemplateBinding BorderBrush}" 
+                                BorderThickness="1" CornerRadius="6">
+                            <ScrollViewer x:Name="PART_ContentHost" Margin="0"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsFocused" Value="True">
+                                <Setter TargetName="Border" Property="BorderBrush" Value="#8B5CF6"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="DialogComboBox" TargetType="ComboBox">
+            <Setter Property="Background" Value="#1E293B"/>
+            <Setter Property="Foreground" Value="Black"/> <!-- Combobox items visual fix -->
+            <Setter Property="BorderBrush" Value="#334155"/>
+            <Setter Property="Padding" Value="8"/>
+            <Setter Property="FontSize" Value="14"/>
+        </Style>
+
+        <Style x:Key="ActionBtn" TargetType="Button">
+            <Setter Property="Background" Value="#8B5CF6"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="Padding" Value="20,10"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Name="Border" Background="{TemplateBinding Background}" CornerRadius="6">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="Border" Property="Background" Value="#7C3AED"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="SecondaryBtn" TargetType="Button">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Foreground" Value="#94A3B8"/>
+            <Setter Property="BorderBrush" Value="#334155"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="Padding" Value="20,10"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Name="Border" Background="{TemplateBinding Background}" 
+                                BorderBrush="{TemplateBinding BorderBrush}" 
+                                BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="6">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="Border" Property="Background" Value="#1E293B"/>
+                                <Setter Property="Foreground" Value="White"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+
+    <Grid Margin="24">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/> <!-- Title -->
+            <RowDefinition Height="*"/>    <!-- Scrollable Fields -->
+            <RowDefinition Height="Auto"/> <!-- Buttons -->
+        </Grid.RowDefinitions>
+
+        <!-- Title -->
+        <TextBlock Name="TitleText" Grid.Row="0" Text="Add New Alarm" Foreground="White" FontSize="20" FontWeight="Bold" Margin="0,0,0,20"/>
+
+        <!-- Form fields -->
+        <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" Margin="0,0,0,20">
+            <StackPanel>
+                <!-- Time Selection -->
+                <TextBlock Text="Time (HH:MM)" Style="{StaticResource FormLabel}"/>
+                <Grid Margin="0,0,0,16">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    
+                    <ComboBox Name="HourComboBox" Grid.Column="0" Height="40" Padding="8" Background="#1E293B" BorderBrush="#334155"/>
+                    <TextBlock Grid.Column="1" Text=":" Foreground="White" FontSize="20" FontWeight="Bold" Margin="10,0" VerticalAlignment="Center"/>
+                    <ComboBox Name="MinuteComboBox" Grid.Column="2" Height="40" Padding="8" Background="#1E293B" BorderBrush="#334155"/>
+                </Grid>
+
+                <!-- Label -->
+                <TextBlock Text="Label" Style="{StaticResource FormLabel}"/>
+                <TextBox Name="LabelTextBox" Style="{StaticResource DialogTextBox}" Text="Wake Up!" Margin="0,0,0,16"/>
+
+                <!-- Difficulty -->
+                <TextBlock Text="Challenge Difficulty" Style="{StaticResource FormLabel}"/>
+                <ComboBox Name="DifficultyComboBox" Height="40" Margin="0,0,0,16" Padding="8" Background="#1E293B" BorderBrush="#334155" SelectionChanged="DifficultyComboBox_SelectionChanged">
+                    <ComboBoxItem Content="Easy" IsSelected="True"/>
+                    <ComboBoxItem Content="Medium"/>
+                    <ComboBoxItem Content="Hard"/>
+                </ComboBox>
+
+                <!-- Required Streak -->
+                <TextBlock Text="Challenge Required Streak" Style="{StaticResource FormLabel}"/>
+                <ComboBox Name="RequiredStreakComboBox" Height="40" Margin="0,0,0,16" Padding="8" Background="#1E293B" BorderBrush="#334155">
+                    <ComboBoxItem Content="1"/>
+                    <ComboBoxItem Content="2"/>
+                    <ComboBoxItem Content="3"/>
+                    <ComboBoxItem Content="4"/>
+                    <ComboBoxItem Content="5"/>
+                    <ComboBoxItem Content="6"/>
+                    <ComboBoxItem Content="7"/>
+                    <ComboBoxItem Content="8"/>
+                    <ComboBoxItem Content="9"/>
+                    <ComboBoxItem Content="10"/>
+                </ComboBox>
+
+                <!-- Repeat Days -->
+                <TextBlock Text="Repeat Days" Style="{StaticResource FormLabel}"/>
+                <WrapPanel Margin="0,0,0,16">
+                    <CheckBox Name="ChkMon" Content="Mon" Foreground="White" Margin="0,0,12,6"/>
+                    <CheckBox Name="ChkTue" Content="Tue" Foreground="White" Margin="0,0,12,6"/>
+                    <CheckBox Name="ChkWed" Content="Wed" Foreground="White" Margin="0,0,12,6"/>
+                    <CheckBox Name="ChkThu" Content="Thu" Foreground="White" Margin="0,0,12,6"/>
+                    <CheckBox Name="ChkFri" Content="Fri" Foreground="White" Margin="0,0,12,6"/>
+                    <CheckBox Name="ChkSat" Content="Sat" Foreground="White" Margin="0,0,12,6"/>
+                    <CheckBox Name="ChkSun" Content="Sun" Foreground="White" Margin="0,0,12,6"/>
+                </WrapPanel>
+
+                <!-- Custom Sound -->
+                <TextBlock Text="Alarm Sound (.mp3, .wav)" Style="{StaticResource FormLabel}"/>
+                <Grid Margin="0,0,0,10">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    
+                    <TextBox Name="SoundPathTextBox" Style="{StaticResource DialogTextBox}" Margin="0,0,10,0"/>
+                    <Button Content="Browse" Grid.Column="1" Style="{StaticResource SecondaryBtn}" Padding="12,8" Click="BrowseSound_Click"/>
+                </Grid>
+                
+                <!-- Sound Warning message -->
+                <TextBlock Name="SoundWarningText" Text="" Foreground="#F43F5E" FontSize="12" Margin="0,0,0,16" Visibility="Collapsed" TextWrapping="Wrap"/>
+            </StackPanel>
+        </ScrollViewer>
+
+        <!-- Action buttons -->
+        <Grid Grid.Row="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            
+            <Button Content="Cancel" Grid.Column="0" Style="{StaticResource SecondaryBtn}" Margin="0,0,8,0" Click="Cancel_Click"/>
+            <Button Content="Save Alarm" Grid.Column="1" Style="{StaticResource ActionBtn}" Margin="8,0,0,0" Click="Save_Click"/>
+        </Grid>
+    </Grid>
+</Window>
