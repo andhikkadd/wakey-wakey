@@ -58,6 +58,7 @@ namespace WakeyWakey.Services
                     }
 
                     // Crucial Settings to wake computer and ensure reliability
+                    td.Principal.RunLevel = TaskRunLevel.Highest; // Run with admin rights (bypasses elevation error 2147943140)
                     td.Settings.WakeToRun = true; // Wake from sleep
                     td.Settings.DisallowStartIfOnBatteries = false; // Run on battery
                     td.Settings.StopIfGoingOnBatteries = false; // Keep running if battery status changes

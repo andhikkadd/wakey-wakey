@@ -3,6 +3,7 @@ using System.Linq;
 using System.Threading;
 using System.Windows;
 using WakeyWakey.Views;
+using WakeyWakey.Services;
 
 namespace WakeyWakey
 {
@@ -10,6 +11,7 @@ namespace WakeyWakey
     {
         private static Mutex? _mutex;
         private const string MutexName = "Global\\WakeyWakeyMutex";
+        private static ApiService? _apiService;
 
         protected override void OnStartup(StartupEventArgs e)
         {
@@ -59,6 +61,9 @@ namespace WakeyWakey
             else
             {
                 // Run in Normal Dashboard mode
+                _apiService = new ApiService();
+                _apiService.Start();
+
                 var mainWindow = new MainWindow();
                 mainWindow.Show();
             }
@@ -66,6 +71,7 @@ namespace WakeyWakey
 
         protected override void OnExit(ExitEventArgs e)
         {
+            _apiService?.Stop();
             _mutex?.ReleaseMutex();
             _mutex?.Dispose();
             base.OnExit(e);

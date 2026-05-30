@@ -1,0 +1,130 @@
+<Window x:Class="WakeyWakey.Views.TimerWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Timer Complete!" Height="500" Width="600"
+        WindowStartupLocation="CenterScreen"
+        WindowStyle="None"
+        AllowsTransparency="True"
+        Background="Transparent"
+        Topmost="True"
+        ResizeMode="NoResize">
+
+    <Window.Resources>
+        <Style x:Key="GlassTextBox" TargetType="TextBox">
+            <Setter Property="Background" Value="#0Affffff"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="BorderBrush" Value="#33ffffff"/>
+            <Setter Property="FontSize" Value="20"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="CaretBrush" Value="#8B5CF6"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="TextBox">
+                        <Border Name="Border" Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="1" CornerRadius="12">
+                            <ScrollViewer x:Name="PART_ContentHost" Margin="0"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsFocused" Value="True">
+                                <Setter TargetName="Border" Property="BorderBrush" Value="#8B5CF6"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="GlassButton" TargetType="Button">
+            <Setter Property="Background" Value="#6366F1"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Name="Border" Background="{TemplateBinding Background}" CornerRadius="12">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="Border" Property="Background" Value="#4F46E5"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+
+    <!-- Glassmorphic outer container -->
+    <Border BorderBrush="#1Fffffff" BorderThickness="1" CornerRadius="20" ClipToBounds="True">
+        <Border.Background>
+            <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                <GradientStop Color="#09080F" Offset="0.0"/>
+                <GradientStop Color="#0E0C1E" Offset="1.0"/>
+            </LinearGradientBrush>
+        </Border.Background>
+
+        <!-- Ambient glow background (pulsing animation) -->
+        <Grid>
+            <Ellipse Name="GlowEllipse" Width="350" Height="350" HorizontalAlignment="Center" VerticalAlignment="Center" Opacity="0.08">
+                <Ellipse.Fill>
+                    <RadialGradientBrush>
+                        <GradientStop Color="#10B981" Offset="0.0"/>
+                        <GradientStop Color="Transparent" Offset="1.0"/>
+                    </RadialGradientBrush>
+                </Ellipse.Fill>
+                <Ellipse.Triggers>
+                    <EventTrigger RoutedEvent="Loaded">
+                        <BeginStoryboard>
+                            <Storyboard RepeatBehavior="Forever" AutoReverse="True">
+                                <DoubleAnimation Storyboard.TargetProperty="Opacity" From="0.05" To="0.18" Duration="0:0:2.5"/>
+                            </Storyboard>
+                        </BeginStoryboard>
+                    </EventTrigger>
+                </Ellipse.Triggers>
+            </Ellipse>
+
+            <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Width="480">
+                <!-- Header -->
+                <TextBlock Text="⏱ Timer Complete!" Foreground="#10B981" FontSize="14" FontWeight="Black"
+                           HorizontalAlignment="Center" Margin="0,0,0,8"/>
+
+                <!-- Timer label -->
+                <TextBlock Name="TimerLabelText" Text="Time's up!" Foreground="White" FontSize="32" FontWeight="ExtraBold"
+                           HorizontalAlignment="Center" Margin="0,0,0,4" TextAlignment="Center" TextWrapping="Wrap"/>
+
+                <TextBlock Text="Solve the challenge to dismiss" Foreground="#64748B" FontSize="12"
+                           HorizontalAlignment="Center" Margin="0,0,0,32"/>
+
+                <!-- Streak progress dots -->
+                <StackPanel Name="StreakPanel" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,24"/>
+
+                <!-- Math question display -->
+                <TextBlock Name="QuestionText" Text="Loading..." Foreground="White" FontSize="42" FontWeight="ExtraBold"
+                           HorizontalAlignment="Center" Margin="0,0,0,24" TextAlignment="Center"/>
+
+                <!-- Input row -->
+                <Grid Margin="0,0,0,12">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBox Name="AnswerTextBox" Grid.Column="0" Style="{StaticResource GlassTextBox}"
+                             Margin="0,0,10,0" Height="58" KeyDown="AnswerTextBox_KeyDown"/>
+                    <Button Name="SubmitButton" Grid.Column="1" Content="Submit" Style="{StaticResource GlassButton}"
+                            Width="110" Height="58" Click="Submit_Click"/>
+                </Grid>
+
+                <!-- Feedback -->
+                <TextBlock Name="FeedbackText" Text="" Foreground="#F43F5E" FontSize="13" FontWeight="Bold"
+                           HorizontalAlignment="Center"/>
+            </StackPanel>
+        </Grid>
+    </Border>
+</Window>

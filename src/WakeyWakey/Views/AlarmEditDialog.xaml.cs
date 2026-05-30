@@ -1,6 +1,7 @@
 using System;
 using System.IO;
 using System.Windows;
+using System.Windows.Controls;
 using Microsoft.Win32;
 using WakeyWakey.Models;
 using WakeyWakey.Services;
@@ -15,7 +16,6 @@ namespace WakeyWakey.Views
         public AlarmEditDialog(Alarm? existingAlarm = null)
         {
             InitializeComponent();
-            PopulateTimeComboBoxes();
 
             if (existingAlarm != null)
             {
@@ -27,8 +27,8 @@ namespace WakeyWakey.Views
             {
                 TitleText.Text = "Add New Alarm";
                 AlarmResult = new Alarm();
-                HourComboBox.SelectedValue = 7;
-                MinuteComboBox.SelectedValue = 0;
+                HourTextBox.Text = "07";
+                MinuteTextBox.Text = "00";
                 // Default Easy difficulty is selected, default streak is 2 (Index 1)
                 RequiredStreakComboBox.SelectedIndex = 1;
             }
@@ -37,24 +37,12 @@ namespace WakeyWakey.Views
             SoundPathTextBox.TextChanged += SoundPathTextBox_TextChanged;
         }
 
-        private void PopulateTimeComboBoxes()
-        {
-            for (int i = 0; i < 24; i++)
-            {
-                HourComboBox.Items.Add(i);
-            }
-            for (int i = 0; i < 60; i++)
-            {
-                MinuteComboBox.Items.Add(i);
-            }
-        }
-
         private void LoadAlarmData(Alarm alarm)
         {
             _isLoading = true;
             
-            HourComboBox.SelectedValue = alarm.Hour;
-            MinuteComboBox.SelectedValue = alarm.Minute;
+            HourTextBox.Text = alarm.Hour.ToString("D2");
+            MinuteTextBox.Text = alarm.Minute.ToString("D2");
             LabelTextBox.Text = alarm.Label;
             DifficultyComboBox.SelectedIndex = (int)alarm.Difficulty;
             RequiredStreakComboBox.SelectedIndex = Math.Clamp(alarm.ChallengeRequiredStreak - 1, 0, 9);
@@ -74,7 +62,7 @@ namespace WakeyWakey.Views
             _isLoading = false;
         }
 
-        private void SoundPathTextBox_TextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e)
+        private void SoundPathTextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
             ValidateSoundFile(SoundPathTextBox.Text);
         }
@@ -116,7 +104,7 @@ namespace WakeyWakey.Views
             }
         }
 
-        private void DifficultyComboBox_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+        private void DifficultyComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (_isLoading || RequiredStreakComboBox == null) return;
 
@@ -133,15 +121,16 @@ namespace WakeyWakey.Views
 
         private void Save_Click(object sender, RoutedEventArgs e)
         {
-            // Gather time
-            if (HourComboBox.SelectedValue == null || MinuteComboBox.SelectedValue == null)
+            // Parse & Validate modern numeric time
+            if (!int.TryParse(HourTextBox.Text, out int hour) || hour < 0 || hour > 23 ||
+                !int.TryParse(MinuteTextBox.Text, out int minute) || minute < 0 || minute > 59)
             {
-                MessageBox.Show("Please select a valid Hour and Minute.", "Validation Error", MessageBoxButton.OK, MessageBoxImage.Warning);
+                MessageBox.Show("Please enter a valid time (Hour 0-23, Minute 0-59).", "Validation Error", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
             }
 
-            AlarmResult.Hour = (int)HourComboBox.SelectedValue;
-            AlarmResult.Minute = (int)MinuteComboBox.SelectedValue;
+            AlarmResult.Hour = hour;
+            AlarmResult.Minute = minute;
             AlarmResult.Label = string.IsNullOrWhiteSpace(LabelTextBox.Text) ? "Alarm" : LabelTextBox.Text.Trim();
             AlarmResult.Difficulty = (ChallengeDifficulty)DifficultyComboBox.SelectedIndex;
             AlarmResult.ChallengeRequiredStreak = RequiredStreakComboBox.SelectedIndex + 1;
@@ -166,6 +155,41 @@ namespace WakeyWakey.Views
         {
             DialogResult = false;
             Close();
+        }
+
+        private void TitleBar_MouseLeftButtonDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            if (e.ChangedButton == System.Windows.Input.MouseButton.Left)
+            {
+                this.DragMove();
+            }
+        }
+
+        // Modern Scrolling UX: Scroll over textboxes to change time!
+        private void HourTextBox_PreviewMouseWheel(object sender, System.Windows.Input.MouseWheelEventArgs e)
+        {
+            if (int.TryParse(HourTextBox.Text, out int hour))
+            {
+                hour = e.Delta > 0 ? (hour + 1) % 24 : (hour + 23) % 24;
+                HourTextBox.Text = hour.ToString("D2");
+            }
+            e.Handled = true;
+        }
+
+        private void MinuteTextBox_PreviewMouseWheel(object sender, System.Windows.Input.MouseWheelEventArgs e)
+        {
+            if (int.TryParse(MinuteTextBox.Text, out int minute))
+            {
+                minute = e.Delta > 0 ? (minute + 1) % 60 : (minute + 59) % 60;
+                MinuteTextBox.Text = minute.ToString("D2");
+            }
+            e.Handled = true;
+        }
+
+        // Numeric entry restriction
+        private void NumericTextBox_PreviewTextInput(object sender, System.Windows.Input.TextCompositionEventArgs e)
+        {
+            e.Handled = !char.IsDigit(e.Text, 0);
         }
     }
 }

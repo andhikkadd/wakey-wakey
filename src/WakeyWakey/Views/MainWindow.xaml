@@ -4,11 +4,11 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
-        Title="WakeyWakey Dashboard" Height="620" Width="900"
-        Background="#0B0F19"
-        Foreground="White"
+        Title="WakeyWakey Dashboard" Height="640" Width="920"
         WindowStartupLocation="CenterScreen"
-        BorderThickness="0"
+        WindowStyle="None"
+        AllowsTransparency="True"
+        Background="Transparent"
         ResizeMode="CanMinimize"
         Icon="pack://application:,,,/Resources/logo.ico">
 
@@ -18,88 +18,33 @@
 
         <!-- Modern ScrollBar Styling -->
         <Style TargetType="ScrollBar">
-            <Setter Property="Background" Value="#111827"/>
-            <Setter Property="BorderBrush" Value="Transparent"/>
-        </Style>
-
-        <!-- Custom Card Border Style -->
-        <Style x:Key="BentoCard" TargetType="Border">
-            <Setter Property="Background" Value="#1E293B"/>
-            <Setter Property="BorderBrush" Value="#334155"/>
-            <Setter Property="BorderThickness" Value="1"/>
-            <Setter Property="CornerRadius" Value="12"/>
-            <Setter Property="Padding" Value="20,16"/>
-            <Setter Property="Margin" Value="0,0,0,12"/>
-        </Style>
-
-        <!-- Action Button (Primary purple) -->
-        <Style x:Key="PrimaryActionBtn" TargetType="Button">
-            <Setter Property="Background" Value="#8B5CF6"/>
-            <Setter Property="Foreground" Value="White"/>
-            <Setter Property="FontWeight" Value="SemiBold"/>
-            <Setter Property="FontSize" Value="14"/>
-            <Setter Property="Padding" Value="18,10"/>
-            <Setter Property="BorderThickness" Value="0"/>
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="Button">
-                        <Border Name="Border" Background="{TemplateBinding Background}" CornerRadius="8">
-                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                        </Border>
-                        <ControlTemplate.Triggers>
-                            <Trigger Property="IsMouseOver" Value="True">
-                                <Setter TargetName="Border" Property="Background" Value="#7C3AED"/>
-                            </Trigger>
-                        </ControlTemplate.Triggers>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
-
-        <!-- Accent/Test Button (Electric Pink) -->
-        <Style x:Key="AccentActionBtn" TargetType="Button">
-            <Setter Property="Background" Value="#EC4899"/>
-            <Setter Property="Foreground" Value="White"/>
-            <Setter Property="FontWeight" Value="SemiBold"/>
-            <Setter Property="FontSize" Value="14"/>
-            <Setter Property="Padding" Value="18,10"/>
-            <Setter Property="BorderThickness" Value="0"/>
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="Button">
-                        <Border Name="Border" Background="{TemplateBinding Background}" CornerRadius="8">
-                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                        </Border>
-                        <ControlTemplate.Triggers>
-                            <Trigger Property="IsMouseOver" Value="True">
-                                <Setter TargetName="Border" Property="Background" Value="#DB2777"/>
-                            </Trigger>
-                        </ControlTemplate.Triggers>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
-
-        <!-- Secondary Button (Transparent, Bordered) -->
-        <Style x:Key="SecondaryBtn" TargetType="Button">
             <Setter Property="Background" Value="Transparent"/>
-            <Setter Property="Foreground" Value="#94A3B8"/>
-            <Setter Property="BorderBrush" Value="#475569"/>
+            <Setter Property="BorderBrush" Value="Transparent"/>
+            <Setter Property="Width" Value="8"/>
+        </Style>
+
+        <!-- Add Alarm Button (Clean indigo fill, subtle) -->
+        <Style x:Key="PrimaryActionBtn" TargetType="Button">
+            <Setter Property="Background" Value="#1E1B4B"/>
+            <Setter Property="Foreground" Value="#A78BFA"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="Padding" Value="14,0"/>
+            <Setter Property="BorderBrush" Value="#4338CA"/>
             <Setter Property="BorderThickness" Value="1"/>
-            <Setter Property="FontWeight" Value="Medium"/>
-            <Setter Property="FontSize" Value="13"/>
-            <Setter Property="Padding" Value="12,8"/>
+            <Setter Property="Cursor" Value="Hand"/>
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="Button">
-                        <Border Name="Border" Background="{TemplateBinding Background}" 
-                                BorderBrush="{TemplateBinding BorderBrush}" 
-                                BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="6">
+                        <Border Name="Border" Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="10">
                             <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
                         </Border>
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsMouseOver" Value="True">
-                                <Setter TargetName="Border" Property="Background" Value="#1E293B"/>
+                                <Setter TargetName="Border" Property="Background" Value="#312E81"/>
+                                <Setter TargetName="Border" Property="BorderBrush" Value="#6366F1"/>
                                 <Setter Property="Foreground" Value="White"/>
                             </Trigger>
                         </ControlTemplate.Triggers>
@@ -108,27 +53,87 @@
             </Setter>
         </Style>
 
-        <!-- Danger Button (Red) -->
+        <!-- Test Alarm Button (Ghost outline style, muted accent) -->
+        <Style x:Key="AccentActionBtn" TargetType="Button">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Foreground" Value="#94A3B8"/>
+            <Setter Property="FontWeight" Value="Medium"/>
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="Padding" Value="14,0"/>
+            <Setter Property="BorderBrush" Value="#334155"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Name="Border" Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="10">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="Border" Property="Background" Value="#1E293B"/>
+                                <Setter TargetName="Border" Property="BorderBrush" Value="#475569"/>
+                                <Setter Property="Foreground" Value="White"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- Secondary Outline Button -->
+        <Style x:Key="SecondaryBtn" TargetType="Button">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Foreground" Value="#94A3B8"/>
+            <Setter Property="BorderBrush" Value="#334155"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="FontWeight" Value="Medium"/>
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="Padding" Value="12,6"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Name="Border" Background="{TemplateBinding Background}" 
+                                BorderBrush="{TemplateBinding BorderBrush}" 
+                                BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="15">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" Margin="4,0"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="Border" Property="Background" Value="#1E293B"/>
+                                <Setter Property="Foreground" Value="White"/>
+                                <Setter TargetName="Border" Property="BorderBrush" Value="#475569"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- Danger Button (Sleek Red Text Outline) -->
         <Style x:Key="DangerBtn" TargetType="Button">
             <Setter Property="Background" Value="Transparent"/>
             <Setter Property="Foreground" Value="#EF4444"/>
             <Setter Property="BorderBrush" Value="#991B1B"/>
             <Setter Property="BorderThickness" Value="1"/>
             <Setter Property="FontWeight" Value="Medium"/>
-            <Setter Property="FontSize" Value="13"/>
-            <Setter Property="Padding" Value="12,8"/>
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="Padding" Value="12,6"/>
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="Button">
                         <Border Name="Border" Background="{TemplateBinding Background}" 
                                 BorderBrush="{TemplateBinding BorderBrush}" 
-                                BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="6">
-                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="15">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" Margin="4,0"/>
                         </Border>
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsMouseOver" Value="True">
                                 <Setter TargetName="Border" Property="Background" Value="#7F1D1D"/>
                                 <Setter Property="Foreground" Value="White"/>
+                                <Setter TargetName="Border" Property="BorderBrush" Value="#EF4444"/>
                             </Trigger>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
@@ -136,16 +141,16 @@
             </Setter>
         </Style>
 
-        <!-- Custom styled Switch Toggle for CheckBox -->
+        <!-- Sleek Custom Switch Toggle for Alarm Active status -->
         <Style x:Key="SwitchToggle" TargetType="CheckBox">
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="CheckBox">
                         <BulletDecorator Background="Transparent" Cursor="Hand">
                             <BulletDecorator.Bullet>
-                                <Grid Width="46" Height="24">
-                                    <Border x:Name="BackgroundBorder" Background="#334155" CornerRadius="12" BorderThickness="0"/>
-                                    <Ellipse x:Name="Thumb" Fill="#94A3B8" Width="18" Height="18" HorizontalAlignment="Left" Margin="3,0" VerticalAlignment="Center">
+                                <Grid Width="42" Height="22">
+                                    <Border x:Name="BackgroundBorder" Background="#1E293B" CornerRadius="11" BorderThickness="1" BorderBrush="#334155"/>
+                                    <Ellipse x:Name="Thumb" Fill="#64748B" Width="14" Height="14" HorizontalAlignment="Left" Margin="3,0" VerticalAlignment="Center">
                                         <Ellipse.RenderTransform>
                                             <TranslateTransform X="0"/>
                                         </Ellipse.RenderTransform>
@@ -157,13 +162,14 @@
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsChecked" Value="True">
                                 <Setter TargetName="BackgroundBorder" Property="Background" Value="#10B981"/>
+                                <Setter TargetName="BackgroundBorder" Property="BorderBrush" Value="#059669"/>
                                 <Setter TargetName="Thumb" Property="Fill" Value="White"/>
                                 <Trigger.EnterActions>
                                     <BeginStoryboard>
                                         <Storyboard>
                                             <DoubleAnimation Storyboard.TargetName="Thumb" 
                                                              Storyboard.TargetProperty="(UIElement.RenderTransform).(TranslateTransform.X)" 
-                                                             To="22" Duration="0:0:0.15"/>
+                                                             To="20" Duration="0:0:0.12"/>
                                         </Storyboard>
                                     </BeginStoryboard>
                                 </Trigger.EnterActions>
@@ -172,7 +178,7 @@
                                         <Storyboard>
                                             <DoubleAnimation Storyboard.TargetName="Thumb" 
                                                              Storyboard.TargetProperty="(UIElement.RenderTransform).(TranslateTransform.X)" 
-                                                             To="0" Duration="0:0:0.15"/>
+                                                             To="0" Duration="0:0:0.12"/>
                                         </Storyboard>
                                     </BeginStoryboard>
                                 </Trigger.ExitActions>
@@ -182,166 +188,538 @@
                 </Setter.Value>
             </Setter>
         </Style>
+
+        <!-- Custom Window Control Button Styles -->
+        <Style x:Key="WindowControlBtn" TargetType="Button">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Foreground" Value="#64748B"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Width" Value="32"/>
+            <Setter Property="Height" Value="32"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Name="Border" Background="{TemplateBinding Background}" CornerRadius="16">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Foreground" Value="White"/>
+                                <Setter TargetName="Border" Property="Background" Value="#1E293B"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="WindowCloseControlBtn" TargetType="Button">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Foreground" Value="#64748B"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Width" Value="32"/>
+            <Setter Property="Height" Value="32"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Name="Border" Background="{TemplateBinding Background}" CornerRadius="16">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Foreground" Value="White"/>
+                                <Setter TargetName="Border" Property="Background" Value="#EF4444"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- Custom styled ComboBox dropdown (Flat Dark Theme template to override OS white styles) -->
+        <Style x:Key="DialogComboBox" TargetType="ComboBox">
+            <Setter Property="SnapsToDevicePixels" Value="true"/>
+            <Setter Property="OverridesDefaultStyle" Value="true"/>
+            <Setter Property="MinHeight" Value="38"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="ItemContainerStyle">
+                <Setter.Value>
+                    <Style TargetType="ComboBoxItem">
+                        <Setter Property="Background" Value="#1A202C"/>
+                        <Setter Property="Foreground" Value="White"/>
+                        <Setter Property="Padding" Value="8"/>
+                        <Style.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#4F46E5"/>
+                                <Setter Property="Foreground" Value="White"/>
+                            </Trigger>
+                            <Trigger Property="IsSelected" Value="True">
+                                <Setter Property="Background" Value="#6366F1"/>
+                                <Setter Property="Foreground" Value="White"/>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ComboBox">
+                        <Grid Name="MainGrid">
+                            <ToggleButton Name="ToggleButton" 
+                                          Focusable="false"
+                                          IsChecked="{Binding Path=IsDropDownOpen, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}" 
+                                          ClickMode="Press">
+                                <ToggleButton.Template>
+                                    <ControlTemplate TargetType="ToggleButton">
+                                        <Border Name="Border" CornerRadius="8" Background="#1A202C" BorderBrush="#2D3748" BorderThickness="1">
+                                            <Grid>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition />
+                                                    <ColumnDefinition Width="30" />
+                                                </Grid.ColumnDefinitions>
+                                                <Path Name="Arrow" Grid.Column="1" Fill="#718096" HorizontalAlignment="Center" VerticalAlignment="Center" Data="M 0 0 L 4 4 L 8 0 Z"/>
+                                            </Grid>
+                                        </Border>
+                                        <ControlTemplate.Triggers>
+                                            <Trigger Property="IsMouseOver" Value="true">
+                                                <Setter TargetName="Border" Property="Background" Value="#2D3748"/>
+                                                <Setter TargetName="Border" Property="BorderBrush" Value="#4A5568"/>
+                                                <Setter TargetName="Arrow" Property="Fill" Value="White"/>
+                                            </Trigger>
+                                            <Trigger Property="IsChecked" Value="true">
+                                                <Setter TargetName="Border" Property="Background" Value="#2D3748"/>
+                                                <Setter TargetName="Border" Property="BorderBrush" Value="#6366F1"/>
+                                                <Setter TargetName="Arrow" Property="Fill" Value="White"/>
+                                            </Trigger>
+                                        </ControlTemplate.Triggers>
+                                    </ControlTemplate>
+                                </ToggleButton.Template>
+                            </ToggleButton>
+                            <ContentPresenter Name="ContentSite" IsHitTestVisible="False" Content="{TemplateBinding SelectionBoxItem}"
+                                              ContentTemplate="{TemplateBinding SelectionBoxItemTemplate}"
+                                              ContentTemplateSelector="{TemplateBinding ItemTemplateSelector}"
+                                              Margin="12,0,30,0" VerticalAlignment="Center" HorizontalAlignment="Left" />
+                            <Popup Name="Popup" Placement="Bottom" IsOpen="{TemplateBinding IsDropDownOpen}" AllowsTransparency="True" Focusable="False" PopupAnimation="Slide">
+                                <Grid Name="DropDown" SnapsToDevicePixels="True" MinWidth="{TemplateBinding ActualWidth}" MaxHeight="{TemplateBinding MaxDropDownHeight}">
+                                    <Border Name="DropDownBorder" Background="#1A202C" BorderBrush="#2D3748" BorderThickness="1" CornerRadius="8" Margin="0,4,0,4">
+                                        <Border.Effect>
+                                            <DropShadowEffect Color="Black" BlurRadius="8" ShadowDepth="2" Opacity="0.3"/>
+                                        </Border.Effect>
+                                        <ScrollViewer Margin="2" SnapsToDevicePixels="True">
+                                            <StackPanel IsItemsHost="True" KeyboardNavigation.DirectionalNavigation="Contained" />
+                                        </ScrollViewer>
+                                    </Border>
+                                </Grid>
+                            </Popup>
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- Custom Preset Button Chip style -->
+        <Style x:Key="PresetBtn" TargetType="Button">
+            <Setter Property="Background" Value="#0Affffff"/>
+            <Setter Property="Foreground" Value="#94A3B8"/>
+            <Setter Property="BorderBrush" Value="#1E293B"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Padding" Value="12,6"/>
+            <Setter Property="Margin" Value="0,0,8,8"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Name="Border" Background="{TemplateBinding Background}" 
+                                BorderBrush="{TemplateBinding BorderBrush}" 
+                                BorderThickness="1" CornerRadius="8">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" Margin="{TemplateBinding Padding}"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="Border" Property="Background" Value="#15ffffff"/>
+                                <Setter TargetName="Border" Property="BorderBrush" Value="#6366F1"/>
+                                <Setter Property="Foreground" Value="White"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
     </Window.Resources>
 
-    <Grid>
-        <!-- Background Gradients -->
-        <Grid.Background>
+    <!-- Main Outer Container for Custom Shadows & Window Borders -->
+    <Border BorderBrush="#1Fffffff" BorderThickness="1" CornerRadius="16" ClipToBounds="True">
+        <Border.Background>
             <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
-                <GradientStop Color="#090D16" Offset="0.0"/>
-                <GradientStop Color="#0F172A" Offset="0.6"/>
-                <GradientStop Color="#1E1B4B" Offset="1.0"/>
+                <GradientStop Color="#09080F" Offset="0.0"/>
+                <GradientStop Color="#0E0D1A" Offset="0.5"/>
+                <GradientStop Color="#141226" Offset="1.0"/>
             </LinearGradientBrush>
-        </Grid.Background>
+        </Border.Background>
 
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="280"/> <!-- Left Panel: Info & Tools -->
-            <ColumnDefinition Width="*"/>   <!-- Right Panel: Alarms List -->
-        </Grid.ColumnDefinitions>
-
-        <!-- LEFT SIDEBAR -->
-        <Border Grid.Column="0" Background="#111827" BorderBrush="#1F2937" BorderThickness="0,0,1,0" Padding="24">
-            <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto"/>    <!-- Header Title -->
-                    <RowDefinition Height="*"/>       <!-- Diagnostics / Quick Instructions -->
-                    <RowDefinition Height="Auto"/>    <!-- Bottom branding -->
-                </Grid.RowDefinitions>
-
-                <!-- Header Title -->
-                <StackPanel Grid.Row="0" Margin="0,0,0,30">
-                    <StackPanel Orientation="Horizontal" Margin="0,0,0,6">
-                        <Image Source="pack://application:,,,/Resources/logo.png" Width="36" Height="36" Margin="0,0,10,0" VerticalAlignment="Center"/>
-                        <TextBlock Text="WakeyWakey" Foreground="White" FontSize="26" FontWeight="Black" VerticalAlignment="Center"/>
-                    </StackPanel>
-                    <TextBlock Text="Get up. No excuses." Foreground="#8B5CF6" FontSize="12" FontWeight="SemiBold" Margin="0,2,0,0"/>
-                </StackPanel>
-
-                <!-- Diagnostics & Settings -->
-                <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" Margin="0,0,0,10">
-                    <StackPanel>
-                        <!-- Section Header -->
-                        <TextBlock Text="WAKE TROUBLESHOOTING" Foreground="#475569" FontSize="11" FontWeight="Bold" Margin="0,0,0,12"/>
-
-                        <!-- Wake Timers Hint -->
-                        <Border Background="#1E293B" BorderBrush="#334155" BorderThickness="1" CornerRadius="8" Padding="12" Margin="0,0,0,12">
-                            <StackPanel>
-                                <TextBlock Text="1. Allow Wake Timers" Foreground="White" FontSize="13" FontWeight="Bold" Margin="0,0,0,4"/>
-                                <TextBlock Text="Must be enabled in Windows Power Options -> Sleep -> Allow wake timers." 
-                                           Foreground="#94A3B8" FontSize="11" TextWrapping="Wrap"/>
-                            </StackPanel>
-                        </Border>
-
-                        <!-- Sleep State Hint -->
-                        <Border Background="#1E293B" BorderBrush="#334155" BorderThickness="1" CornerRadius="8" Padding="12" Margin="0,0,0,12">
-                            <StackPanel>
-                                <TextBlock Text="2. Sleep Mode Only" Foreground="White" FontSize="13" FontWeight="Bold" Margin="0,0,0,4"/>
-                                <TextBlock Text="System must be put in 'Sleep' mode. Shutting down or Hibernating prevents waking on most PCs." 
-                                           Foreground="#94A3B8" FontSize="11" TextWrapping="Wrap"/>
-                            </StackPanel>
-                        </Border>
-
-                        <!-- Lid Behavior Hint -->
-                        <Border Background="#1E293B" BorderBrush="#334155" BorderThickness="1" CornerRadius="8" Padding="12" Margin="0,0,0,15">
-                            <StackPanel>
-                                <TextBlock Text="3. Laptop Lids" Foreground="White" FontSize="13" FontWeight="Bold" Margin="0,0,0,4"/>
-                                <TextBlock Text="Closed lids may block wake audio/video depending on BIOS and OEM configurations." 
-                                           Foreground="#94A3B8" FontSize="11" TextWrapping="Wrap"/>
-                            </StackPanel>
-                        </Border>
-
-                        <!-- Button to open power options -->
-                        <Button Content="Open Power Options" Style="{StaticResource SecondaryBtn}" Click="OpenPowerOptions_Click" HorizontalAlignment="Stretch" Margin="0,0,0,20"/>
-                    </StackPanel>
-                </ScrollViewer>
-
-                <!-- Branding -->
-                <TextBlock Grid.Row="2" Text="v1.0.0 (Native WPF)" Foreground="#334155" FontSize="11" HorizontalAlignment="Center"/>
-            </Grid>
-        </Border>
-
-        <!-- RIGHT MAIN AREA -->
-        <Grid Grid.Column="1" Margin="30">
+        <Grid>
             <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"/> <!-- Title + Actions -->
-                <RowDefinition Height="*"/>    <!-- Alarms Scroll list -->
+                <RowDefinition Height="50"/> <!-- Custom Titlebar Row -->
+                <RowDefinition Height="*"/>  <!-- Main Panel Area Row -->
             </Grid.RowDefinitions>
 
-            <!-- Dashboard title + Actions -->
-            <Grid Grid.Row="0" Margin="0,0,0,24">
+            <!-- CUSTOM TITLEBAR -->
+            <Grid Grid.Row="0" Name="TitleBar" Background="Transparent" MouseLeftButtonDown="TitleBar_MouseLeftButtonDown">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/> <!-- Icon & Brand -->
+                    <ColumnDefinition Width="*"/>    <!-- Draggable Region spacer -->
+                    <ColumnDefinition Width="Auto"/> <!-- Min/Close Windows controls -->
                 </Grid.ColumnDefinitions>
 
-                <StackPanel Grid.Column="0">
-                    <TextBlock Text="Alarms" Foreground="White" FontSize="28" FontWeight="Bold"/>
-                    <TextBlock Text="Manage and schedule your alarms" Foreground="#94A3B8" FontSize="13"/>
+                <!-- Brand/Logo (Sleek minimalist style) -->
+                <StackPanel Grid.Column="0" Orientation="Horizontal" Margin="20,0,0,0" VerticalAlignment="Center">
+                    <Image Source="pack://application:,,,/Resources/logo.png" Width="20" Height="20" Margin="0,0,8,0" RenderOptions.BitmapScalingMode="HighQuality"/>
+                    <TextBlock Text="WakeyWakey" Foreground="White" FontSize="14" FontWeight="Bold" VerticalAlignment="Center"/>
+                    <Border Background="#1E1B4B" CornerRadius="8" Padding="6,2" Margin="8,0,0,0" VerticalAlignment="Center">
+                        <TextBlock Text="PRO" Foreground="#A78BFA" FontSize="9" FontWeight="Black"/>
+                    </Border>
                 </StackPanel>
 
-                <!-- Top buttons -->
-                <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center">
-                    <Button Content="Test Trigger" Style="{StaticResource AccentActionBtn}" Margin="0,0,12,0" Click="TestTrigger_Click"/>
-                    <Button Content="+ Add Alarm" Style="{StaticResource PrimaryActionBtn}" Click="AddAlarm_Click"/>
+                <!-- Titlebar controls (Sleek minimal dots/buttons) -->
+                <StackPanel Grid.Column="2" Orientation="Horizontal" Margin="0,0,16,0" VerticalAlignment="Center">
+                    <Button Content="—" Style="{StaticResource WindowControlBtn}" Click="MinimizeButton_Click" ToolTip="Minimize"/>
+                    <Button Content="✕" Style="{StaticResource WindowCloseControlBtn}" Click="CloseButton_Click" Margin="4,0,0,0" ToolTip="Close"/>
                 </StackPanel>
             </Grid>
 
-            <!-- Alarms List Scroll area -->
-            <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
-                <ItemsControl Name="AlarmsItemsControl">
-                    <!-- Item container template -->
-                    <ItemsControl.ItemTemplate>
-                        <DataTemplate>
-                            <Border Style="{StaticResource BentoCard}">
+            <!-- MAIN WORKING AREA -->
+            <Grid Grid.Row="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="260"/> <!-- Minimalist Sidebar -->
+                    <ColumnDefinition Width="*"/>   <!-- Minimalist Clean Alarms Board -->
+                </Grid.ColumnDefinitions>
+
+                <!-- 1. LEFT SIDEBAR -->
+                <Border Grid.Column="0" Background="#0Affffff" BorderBrush="#0Dffffff" BorderThickness="0,0,1,0" Padding="20,10,20,20">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>    <!-- Subtext slogan -->
+                            <RowDefinition Height="*"/>       <!-- Diagnostics/Troubleshooting -->
+                            <RowDefinition Height="Auto"/>    <!-- Version footer -->
+                        </Grid.RowDefinitions>
+
+                        <!-- Slogan -->
+                        <StackPanel Grid.Row="0" Margin="0,0,0,24">
+                            <TextBlock Text="Get up. No excuses." Foreground="#8B5CF6" FontSize="11" FontWeight="Bold"/>
+                        </StackPanel>
+
+                        <!-- SLEEK TROUBLESHOOTING DRAWER -->
+                        <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" Margin="0,0,0,10">
+                            <StackPanel>
+                                <TextBlock Text="DIAGNOSTICS &amp; STATUS" Foreground="#64748B" FontSize="10" FontWeight="Black" Margin="0,0,0,15"/>
+
+                                <!-- Card 1 -->
+                                <Border Background="#06ffffff" BorderBrush="#08ffffff" BorderThickness="1" CornerRadius="12" Padding="12" Margin="0,0,0,12">
+                                    <StackPanel>
+                                        <TextBlock Text="✦ Allow Wake Timers" Foreground="White" FontSize="12" FontWeight="Bold" Margin="0,0,0,3"/>
+                                        <TextBlock Text="Required in Windows Power Options -> Sleep -> Allow wake timers to wake from sleep states." 
+                                                   Foreground="#94A3B8" FontSize="10" TextWrapping="Wrap" LineHeight="14"/>
+                                    </StackPanel>
+                                </Border>
+
+                                <!-- Card 2 -->
+                                <Border Background="#06ffffff" BorderBrush="#08ffffff" BorderThickness="1" CornerRadius="12" Padding="12" Margin="0,0,0,12">
+                                    <StackPanel>
+                                        <TextBlock Text="✦ System Sleep Only" Foreground="White" FontSize="12" FontWeight="Bold" Margin="0,0,0,3"/>
+                                        <TextBlock Text="Put PC to 'Sleep'. Shutting down or hibernating stops wake timers on most hardware." 
+                                                   Foreground="#94A3B8" FontSize="10" TextWrapping="Wrap" LineHeight="14"/>
+                                    </StackPanel>
+                                </Border>
+
+                                <!-- Card 3 -->
+                                <Border Background="#06ffffff" BorderBrush="#08ffffff" BorderThickness="1" CornerRadius="12" Padding="12" Margin="0,0,0,15">
+                                    <StackPanel>
+                                        <TextBlock Text="✦ Laptop Lids &amp; BIOS" Foreground="White" FontSize="12" FontWeight="Bold" Margin="0,0,0,3"/>
+                                        <TextBlock Text="Closed lids might mute alarms depending on OEM device configurations." 
+                                                   Foreground="#94A3B8" FontSize="10" TextWrapping="Wrap" LineHeight="14"/>
+                                    </StackPanel>
+                                </Border>
+
+                                <Button Content="Configure System Power" Style="{StaticResource SecondaryBtn}" Click="OpenPowerOptions_Click" HorizontalAlignment="Stretch" Height="34"/>
+                            </StackPanel>
+                        </ScrollViewer>
+
+                        <!-- Brand Info -->
+                        <TextBlock Grid.Row="2" Text="v1.1.0 • Native Desktop WPF" Foreground="#475569" FontSize="10" HorizontalAlignment="Center"/>
+                    </Grid>
+                </Border>
+
+                <!-- 2. RIGHT MAIN AREA — Tab-based: Alarms + Timer -->
+                <Grid Grid.Column="1" Margin="25">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/> <!-- Tab nav bar -->
+                        <RowDefinition Height="*"/>    <!-- Tab content -->
+                    </Grid.RowDefinitions>
+
+                    <!-- ===== TAB NAV BAR ===== -->
+                    <Grid Grid.Row="0" Margin="0,0,0,20">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/> <!-- Tab pills -->
+                            <ColumnDefinition Width="*"/>    <!-- Spacer -->
+                            <ColumnDefinition Width="Auto"/> <!-- Action buttons -->
+                        </Grid.ColumnDefinitions>
+
+                        <!-- Tab Pills -->
+                        <StackPanel Grid.Column="0" Orientation="Horizontal">
+                            <Border Name="AlarmsTabIndicator" Background="#1E1B4B" BorderBrush="#4338CA" BorderThickness="1" CornerRadius="10" Padding="16,8" Margin="0,0,8,0" Cursor="Hand" MouseLeftButtonDown="AlarmsTab_Click">
+                                <TextBlock Name="AlarmsTabText" Text="⏰  Alarms" Foreground="#A78BFA" FontSize="12" FontWeight="SemiBold"/>
+                            </Border>
+                            <Border Name="TimerTabIndicator" Background="Transparent" BorderBrush="#1E293B" BorderThickness="1" CornerRadius="10" Padding="16,8" Cursor="Hand" MouseLeftButtonDown="TimerTab_Click">
+                                <TextBlock Name="TimerTabText" Text="⏱  Timer" Foreground="#475569" FontSize="12" FontWeight="SemiBold"/>
+                            </Border>
+                        </StackPanel>
+
+                        <!-- Contextual action buttons (shown per tab) -->
+                        <StackPanel Grid.Column="2" Orientation="Horizontal" VerticalAlignment="Center" Name="AlarmActions">
+                            <Button Content="⚡ Test Alarm" Style="{StaticResource AccentActionBtn}" Margin="0,0,8,0" Click="TestTrigger_Click" Height="36"/>
+                            <Button Content="＋ Add Alarm" Style="{StaticResource PrimaryActionBtn}" Click="AddAlarm_Click" Height="36"/>
+                        </StackPanel>
+                    </Grid>
+
+                    <!-- ===== ALARMS TAB CONTENT ===== -->
+                    <Grid Grid.Row="1" Name="AlarmsPanel">
+                        <ScrollViewer VerticalScrollBarVisibility="Auto">
+                            <ItemsControl Name="AlarmsItemsControl">
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <Border CornerRadius="16" BorderThickness="1" Margin="0,0,0,12" Padding="18,14">
+                                            <Border.Style>
+                                                <Style TargetType="Border">
+                                                    <Setter Property="Background" Value="#0Affffff"/>
+                                                    <Setter Property="BorderBrush" Value="#08ffffff"/>
+                                                    <Style.Triggers>
+                                                        <Trigger Property="IsMouseOver" Value="True">
+                                                            <Setter Property="Background" Value="#10ffffff"/>
+                                                            <Setter Property="BorderBrush" Value="#18ffffff"/>
+                                                        </Trigger>
+                                                        <DataTrigger Binding="{Binding IsEnabled}" Value="True">
+                                                            <Setter Property="Background" Value="#0D2E1B4B"/>
+                                                            <Setter Property="BorderBrush" Value="#1A8B5CF6"/>
+                                                        </DataTrigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </Border.Style>
+                                            <Grid>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="Auto"/>
+                                                    <ColumnDefinition Width="100"/>
+                                                    <ColumnDefinition Width="*"/>
+                                                    <ColumnDefinition Width="Auto"/>
+                                                    <ColumnDefinition Width="Auto"/>
+                                                </Grid.ColumnDefinitions>
+                                                <CheckBox Grid.Column="0" IsChecked="{Binding IsEnabled}" Style="{StaticResource SwitchToggle}"
+                                                          Click="ToggleAlarm_Click" VerticalAlignment="Center" Tag="{Binding Id}" Margin="0,0,16,0"/>
+                                                <TextBlock Grid.Column="1" Text="{Binding StringTime}" Foreground="White" FontSize="26" FontWeight="SemiBold" VerticalAlignment="Center">
+                                                    <TextBlock.Style>
+                                                        <Style TargetType="TextBlock">
+                                                            <Style.Triggers>
+                                                                <DataTrigger Binding="{Binding IsEnabled}" Value="False">
+                                                                    <Setter Property="Foreground" Value="#64748B"/>
+                                                                </DataTrigger>
+                                                            </Style.Triggers>
+                                                        </Style>
+                                                    </TextBlock.Style>
+                                                </TextBlock>
+                                                <StackPanel Grid.Column="2" VerticalAlignment="Center" Margin="10,0">
+                                                    <TextBlock Text="{Binding Label}" Foreground="White" FontSize="14" FontWeight="SemiBold">
+                                                        <TextBlock.Style>
+                                                            <Style TargetType="TextBlock">
+                                                                <Style.Triggers>
+                                                                    <DataTrigger Binding="{Binding IsEnabled}" Value="False">
+                                                                        <Setter Property="Foreground" Value="#475569"/>
+                                                                    </DataTrigger>
+                                                                </Style.Triggers>
+                                                            </Style>
+                                                        </TextBlock.Style>
+                                                    </TextBlock>
+                                                    <WrapPanel Margin="0,3,0,0">
+                                                        <Border Background="#06ffffff" CornerRadius="8" Padding="6,2" Margin="0,0,8,0">
+                                                            <TextBlock Text="{Binding RepeatDaysText}" Foreground="#64748B" FontSize="9" FontWeight="Bold"/>
+                                                        </Border>
+                                                        <StackPanel Orientation="Horizontal" Visibility="{Binding Path=IsSoundInvalid, Converter={StaticResource BooleanToVisibilityConverter}}" VerticalAlignment="Center">
+                                                            <Border Background="#20EF4444" CornerRadius="8" Padding="6,2">
+                                                                <TextBlock Text="⚠ Fallback Audio Active" Foreground="#F43F5E" FontSize="9" FontWeight="Black"/>
+                                                            </Border>
+                                                        </StackPanel>
+                                                    </WrapPanel>
+                                                </StackPanel>
+                                                <Border Grid.Column="3" Background="{Binding DifficultyBrush}" CornerRadius="10" Padding="8,4" Margin="12,0" VerticalAlignment="Center" HorizontalAlignment="Right">
+                                                    <TextBlock Text="{Binding DifficultyText}" Foreground="{Binding DifficultyTextBrush}" FontSize="9" FontWeight="Black"/>
+                                                </Border>
+                                                <StackPanel Grid.Column="4" Orientation="Horizontal" VerticalAlignment="Center">
+                                                    <Button Content="Edit" Style="{StaticResource SecondaryBtn}" Margin="0,0,6,0" Click="EditAlarm_Click" Tag="{Binding Id}"/>
+                                                    <Button Content="Delete" Style="{StaticResource DangerBtn}" Click="DeleteAlarm_Click" Tag="{Binding Id}"/>
+                                                </StackPanel>
+                                            </Grid>
+                                        </Border>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                        </ScrollViewer>
+                    </Grid>
+
+                    <!-- ===== TIMER TAB CONTENT ===== -->
+                    <Grid Grid.Row="1" Name="TimerPanel" Visibility="Collapsed">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+
+                        <!-- Timer header -->
+                        <StackPanel Grid.Row="0" Margin="0,0,0,20">
+                            <TextBlock Text="Countdown Timer" Foreground="White" FontSize="26" FontWeight="ExtraBold"/>
+                            <TextBlock Text="Set a duration — solve a math challenge to dismiss when it fires" Foreground="#64748B" FontSize="12" Margin="0,2,0,0"/>
+                        </StackPanel>
+
+                        <!-- Timer body (Bento Grid) -->
+                        <Grid Grid.Row="1">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="1.2*"/> <!-- Left Countdown Card -->
+                                <ColumnDefinition Width="1*"/>   <!-- Right Configurations Scroll -->
+                            </Grid.ColumnDefinitions>
+
+                            <!-- LEFT COLUMN: Immersive Focus Countdown Card -->
+                            <Border Grid.Column="0" Background="#08ffffff" BorderBrush="#0Dffffff" BorderThickness="1" CornerRadius="20" Padding="24" Margin="0,0,16,0" VerticalAlignment="Stretch">
                                 <Grid>
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="Auto"/> <!-- Enabled Toggle -->
-                                        <ColumnDefinition Width="100"/>  <!-- Time -->
-                                        <ColumnDefinition Width="*"/>    <!-- Info (Label, Repeat, Warn) -->
-                                        <ColumnDefinition Width="Auto"/> <!-- Difficulty Tag -->
-                                        <ColumnDefinition Width="Auto"/> <!-- Actions (Edit, Delete) -->
-                                    </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto"/>  <!-- Mode header -->
+                                        <RowDefinition Height="*"/>     <!-- Countdown time (centered) -->
+                                        <RowDefinition Height="Auto"/>  <!-- Actions bottom -->
+                                    </Grid.RowDefinitions>
 
-                                    <!-- 1. Enabled Switch -->
-                                    <CheckBox Grid.Column="0" IsChecked="{Binding IsEnabled}" Style="{StaticResource SwitchToggle}" 
-                                              Click="ToggleAlarm_Click" VerticalAlignment="Center" Tag="{Binding Id}" Margin="0,0,20,0"/>
-
-                                    <!-- 2. Time -->
-                                    <StackPanel Grid.Column="1" VerticalAlignment="Center">
-                                        <TextBlock Text="{Binding StringTime}" Foreground="White" FontSize="26" FontWeight="Bold"/>
+                                    <!-- Mode Badge header -->
+                                    <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Left">
+                                        <Border Background="#1E1B4B" CornerRadius="6" Padding="8,4">
+                                            <TextBlock Text="FOCUS MODE" Foreground="#A78BFA" FontSize="9" FontWeight="Black"/>
+                                        </Border>
                                     </StackPanel>
 
-                                    <!-- 3. Label, Days, Sound Status -->
-                                    <StackPanel Grid.Column="2" VerticalAlignment="Center" Margin="10,0">
-                                        <TextBlock Text="{Binding Label}" Foreground="White" FontSize="15" FontWeight="SemiBold" Margin="0,0,0,2"/>
-                                        
-                                        <!-- Days and Sound Warning Row -->
-                                        <WrapPanel Orientation="Horizontal" Margin="0,2,0,0">
-                                            <TextBlock Text="{Binding RepeatDaysText}" Foreground="#64748B" FontSize="11" Margin="0,0,10,0" VerticalAlignment="Center"/>
-                                            
-                                            <!-- Sound Warning indicator -->
-                                            <StackPanel Orientation="Horizontal" Visibility="{Binding Path=IsSoundInvalid, Converter={StaticResource BooleanToVisibilityConverter}}" VerticalAlignment="Center">
-                                                <TextBlock Text="⚠ Sound Invalid (fallback active)" Foreground="#F43F5E" FontSize="11" FontWeight="Bold"/>
-                                            </StackPanel>
-                                        </WrapPanel>
+                                    <!-- Countdown and Status Display -->
+                                    <StackPanel Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Center">
+                                        <!-- Neon glowing digital clock -->
+                                        <TextBlock Name="TimerCountdownDisplay" Text="00:00:00"
+                                                   Foreground="White" FontSize="60" FontWeight="ExtraBold"
+                                                   HorizontalAlignment="Center" FontFamily="Consolas">
+                                            <TextBlock.Effect>
+                                                <DropShadowEffect Color="#6366F1" BlurRadius="25" ShadowDepth="0" Opacity="0.45"/>
+                                            </TextBlock.Effect>
+                                        </TextBlock>
+
+                                        <!-- Status Indicator badge -->
+                                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,14,0,0">
+                                            <Ellipse Name="TimerStatusDot" Width="8" Height="8" Fill="#64748B" VerticalAlignment="Center" Margin="0,0,8,0"/>
+                                            <TextBlock Name="TimerStatusText" Text="Ready to start"
+                                                       Foreground="#94A3B8" FontSize="12" FontWeight="SemiBold" VerticalAlignment="Center"/>
+                                        </StackPanel>
                                     </StackPanel>
 
-                                    <!-- 4. Difficulty Tag -->
-                                    <Border Grid.Column="3" Background="{Binding DifficultyBrush}" CornerRadius="12" Padding="10,4" Margin="15,0" VerticalAlignment="Center" HorizontalAlignment="Right">
-                                        <TextBlock Text="{Binding DifficultyText}" Foreground="{Binding DifficultyTextBrush}" FontSize="11" FontWeight="Bold"/>
-                                    </Border>
-
-                                    <!-- 5. Actions (Edit & Delete) -->
-                                    <StackPanel Grid.Column="4" Orientation="Horizontal" VerticalAlignment="Center">
-                                        <Button Content="Edit" Style="{StaticResource SecondaryBtn}" Margin="0,0,8,0" Click="EditAlarm_Click" Tag="{Binding Id}"/>
-                                        <Button Content="Delete" Style="{StaticResource DangerBtn}" Click="DeleteAlarm_Click" Tag="{Binding Id}"/>
-                                    </StackPanel>
+                                    <!-- Start / Pause / Reset Controls -->
+                                    <Grid Grid.Row="2">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="Auto"/>
+                                        </Grid.ColumnDefinitions>
+                                        <Button Name="TimerStartButton" Grid.Column="0" Content="▶  Start Timer"
+                                                Style="{StaticResource PrimaryActionBtn}" Height="44" Margin="0,0,8,0"
+                                                Click="TimerStart_Click"/>
+                                        <Button Name="TimerResetButton" Grid.Column="1" Content="↺ Reset"
+                                                Style="{StaticResource AccentActionBtn}" Height="44" Width="90"
+                                                Click="TimerReset_Click"/>
+                                    </Grid>
                                 </Grid>
                             </Border>
-                        </DataTemplate>
-                    </ItemsControl.ItemTemplate>
-                </ItemsControl>
-            </ScrollViewer>
+
+                            <!-- RIGHT COLUMN: Scrollable Configurations Panel -->
+                            <ScrollViewer Grid.Column="1" VerticalScrollBarVisibility="Auto" Margin="0,0,0,0">
+                                <StackPanel Margin="0,0,8,0">
+                                    
+                                    <!-- Bento Card 1: Time Selection -->
+                                    <Border Background="#08ffffff" BorderBrush="#0Dffffff" BorderThickness="1" CornerRadius="16" Padding="20" Margin="0,0,0,16">
+                                        <StackPanel>
+                                            <TextBlock Text="DURATION PRESETS" Foreground="#64748B" FontSize="10" FontWeight="Black" Margin="0,0,0,12"/>
+                                            
+                                            <!-- Interactive Hover Preset Chips -->
+                                            <WrapPanel Margin="0,0,0,12">
+                                                <Button Content="5 min" Tag="5" Style="{StaticResource PresetBtn}" Click="TimerPreset_Click"/>
+                                                <Button Content="10 min" Tag="10" Style="{StaticResource PresetBtn}" Click="TimerPreset_Click"/>
+                                                <Button Content="15 min" Tag="15" Style="{StaticResource PresetBtn}" Click="TimerPreset_Click"/>
+                                                <Button Content="25 min" Tag="25" Style="{StaticResource PresetBtn}" Click="TimerPreset_Click"/>
+                                                <Button Content="30 min" Tag="30" Style="{StaticResource PresetBtn}" Click="TimerPreset_Click"/>
+                                                <Button Content="45 min" Tag="45" Style="{StaticResource PresetBtn}" Click="TimerPreset_Click"/>
+                                                <Button Content="60 min" Tag="60" Style="{StaticResource PresetBtn}" Click="TimerPreset_Click"/>
+                                            </WrapPanel>
+
+                                            <!-- Custom minutes entry -->
+                                            <TextBlock Text="CUSTOM MINUTES" Foreground="#64748B" FontSize="10" FontWeight="Black" Margin="0,0,0,8"/>
+                                            <Grid>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="*"/>
+                                                    <ColumnDefinition Width="Auto"/>
+                                                </Grid.ColumnDefinitions>
+                                                <Border Background="#1A202C" BorderBrush="#2D3748" BorderThickness="1" CornerRadius="8">
+                                                    <TextBox Name="CustomMinutesBox" Background="Transparent" Foreground="White"
+                                                             BorderThickness="0" Padding="10,8" FontSize="14" CaretBrush="#8B5CF6"
+                                                             PreviewTextInput="NumericOnly_PreviewTextInput" Text="30"/>
+                                                </Border>
+                                                <Button Grid.Column="1" Content="Set" Style="{StaticResource PrimaryActionBtn}"
+                                                        Height="36" Width="52" Margin="8,0,0,0" Click="TimerSetCustom_Click"/>
+                                            </Grid>
+                                        </StackPanel>
+                                    </Border>
+
+                                    <!-- Bento Card 2: Dismiss Challenge Configurations -->
+                                    <Border Background="#08ffffff" BorderBrush="#0Dffffff" BorderThickness="1" CornerRadius="16" Padding="20" Margin="0,0,0,8">
+                                        <StackPanel>
+                                            <TextBlock Text="DISMISS CHALLENGE" Foreground="#64748B" FontSize="10" FontWeight="Black" Margin="0,0,0,12"/>
+
+                                            <TextBlock Text="Label" Foreground="#475569" FontSize="11" Margin="0,0,0,6"/>
+                                            <Border Background="#1A202C" BorderBrush="#2D3748" BorderThickness="1" CornerRadius="8" Margin="0,0,0,14">
+                                                <TextBox Name="TimerLabelBox" Background="Transparent" Foreground="White"
+                                                         BorderThickness="0" Padding="10,8" FontSize="13" CaretBrush="#8B5CF6" Text="Focus session done!"/>
+                                            </Border>
+
+                                            <Grid>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="1*"/>
+                                                    <ColumnDefinition Width="1*"/>
+                                                </Grid.ColumnDefinitions>
+                                                
+                                                <StackPanel Grid.Column="0" Margin="0,0,8,0">
+                                                    <TextBlock Text="Difficulty" Foreground="#475569" FontSize="11" Margin="0,0,0,6"/>
+                                                    <ComboBox Name="TimerDifficultyBox" Style="{StaticResource DialogComboBox}" SelectedIndex="0">
+                                                        <ComboBoxItem Content="Easy"/>
+                                                        <ComboBoxItem Content="Medium"/>
+                                                        <ComboBoxItem Content="Hard"/>
+                                                    </ComboBox>
+                                                </StackPanel>
+                                                
+                                                <StackPanel Grid.Column="1" Margin="8,0,0,0">
+                                                    <TextBlock Text="Streak Required" Foreground="#475569" FontSize="11" Margin="0,0,0,6"/>
+                                                    <ComboBox Name="TimerStreakBox" Style="{StaticResource DialogComboBox}" SelectedIndex="2">
+                                                        <ComboBoxItem Content="1"/>
+                                                        <ComboBoxItem Content="2"/>
+                                                        <ComboBoxItem Content="3"/>
+                                                        <ComboBoxItem Content="4"/>
+                                                        <ComboBoxItem Content="5"/>
+                                                    </ComboBox>
+                                                </StackPanel>
+                                            </Grid>
+                                        </StackPanel>
+                                    </Border>
+                                </StackPanel>
+                            </ScrollViewer>
+                        </Grid>
+                    </Grid>
+                </Grid>
+            </Grid>
         </Grid>
-    </Grid>
+    </Border>
 </Window>

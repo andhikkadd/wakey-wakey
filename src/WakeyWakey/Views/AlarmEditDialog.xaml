@@ -4,42 +4,43 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
-        Title="Edit Alarm" Height="500" Width="480"
+        Title="Edit Alarm" Height="480" Width="680"
         WindowStartupLocation="CenterOwner"
-        Background="#0F172A"
-        Foreground="White"
         WindowStyle="None"
         AllowsTransparency="True"
-        BorderBrush="#334155"
-        BorderThickness="1"
+        Background="Transparent"
+        BorderThickness="0"
         ResizeMode="NoResize">
 
     <Window.Resources>
+        <!-- Form Labels -->
         <Style x:Key="FormLabel" TargetType="TextBlock">
-            <Setter Property="Foreground" Value="#94A3B8"/>
-            <Setter Property="FontSize" Value="14"/>
-            <Setter Property="FontWeight" Value="SemiBold"/>
-            <Setter Property="Margin" Value="0,0,0,6"/>
+            <Setter Property="Foreground" Value="#64748B"/>
+            <Setter Property="FontSize" Value="10"/>
+            <Setter Property="FontWeight" Value="Black"/>
+            <Setter Property="Margin" Value="0,0,0,8"/>
         </Style>
 
+        <!-- Premium Textbox Styling -->
         <Style x:Key="DialogTextBox" TargetType="TextBox">
-            <Setter Property="Background" Value="#1E293B"/>
+            <Setter Property="Background" Value="#0Affffff"/>
             <Setter Property="Foreground" Value="White"/>
-            <Setter Property="BorderBrush" Value="#334155"/>
-            <Setter Property="Padding" Value="8"/>
-            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="BorderBrush" Value="#22ffffff"/>
+            <Setter Property="Padding" Value="10"/>
+            <Setter Property="FontSize" Value="13"/>
             <Setter Property="CaretBrush" Value="#8B5CF6"/>
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="TextBox">
                         <Border Name="Border" Background="{TemplateBinding Background}" 
                                 BorderBrush="{TemplateBinding BorderBrush}" 
-                                BorderThickness="1" CornerRadius="6">
+                                BorderThickness="1" CornerRadius="8">
                             <ScrollViewer x:Name="PART_ContentHost" Margin="0"/>
                         </Border>
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsFocused" Value="True">
                                 <Setter TargetName="Border" Property="BorderBrush" Value="#8B5CF6"/>
+                                <Setter Property="Background" Value="#10ffffff"/>
                             </Trigger>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
@@ -47,30 +48,166 @@
             </Setter>
         </Style>
 
-        <Style x:Key="DialogComboBox" TargetType="ComboBox">
-            <Setter Property="Background" Value="#1E293B"/>
-            <Setter Property="Foreground" Value="Black"/> <!-- Combobox items visual fix -->
-            <Setter Property="BorderBrush" Value="#334155"/>
-            <Setter Property="Padding" Value="8"/>
-            <Setter Property="FontSize" Value="14"/>
+        <!-- Modern Large Time TextBox Style -->
+        <Style x:Key="DigitalTimeTextBox" TargetType="TextBox">
+            <Setter Property="Background" Value="#131124"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="BorderBrush" Value="#33ffffff"/>
+            <Setter Property="FontSize" Value="28"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Width" Value="80"/>
+            <Setter Property="Height" Value="60"/>
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="CaretBrush" Value="#8B5CF6"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="TextBox">
+                        <Border Name="Border" Background="{TemplateBinding Background}" 
+                                BorderBrush="{TemplateBinding BorderBrush}" 
+                                BorderThickness="1" CornerRadius="12">
+                            <ScrollViewer x:Name="PART_ContentHost" Margin="0"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="Border" Property="BorderBrush" Value="#66ffffff"/>
+                            </Trigger>
+                            <Trigger Property="IsFocused" Value="True">
+                                <Setter TargetName="Border" Property="BorderBrush" Value="#8B5CF6"/>
+                                <Setter Property="Background" Value="#17142A"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
         </Style>
 
+        <!-- Custom styled ComboBox dropdown (Flat Dark Theme template to override OS white styles) -->
+        <Style x:Key="DialogComboBox" TargetType="ComboBox">
+            <Setter Property="SnapsToDevicePixels" Value="true"/>
+            <Setter Property="OverridesDefaultStyle" Value="true"/>
+            <Setter Property="MinHeight" Value="38"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="ItemContainerStyle">
+                <Setter.Value>
+                    <Style TargetType="ComboBoxItem">
+                        <Setter Property="Background" Value="#1E293B"/>
+                        <Setter Property="Foreground" Value="White"/>
+                        <Setter Property="Padding" Value="8"/>
+                        <Style.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#4F46E5"/>
+                                <Setter Property="Foreground" Value="White"/>
+                            </Trigger>
+                            <Trigger Property="IsSelected" Value="True">
+                                <Setter Property="Background" Value="#6366F1"/>
+                                <Setter Property="Foreground" Value="White"/>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ComboBox">
+                        <Grid Name="MainGrid">
+                            <ToggleButton Name="ToggleButton" 
+                                          Focusable="false"
+                                          IsChecked="{Binding Path=IsDropDownOpen, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}" 
+                                          ClickMode="Press">
+                                <ToggleButton.Template>
+                                    <ControlTemplate TargetType="ToggleButton">
+                                        <Border Name="Border" CornerRadius="8" Background="#1A202C" BorderBrush="#2D3748" BorderThickness="1">
+                                            <Grid>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition />
+                                                    <ColumnDefinition Width="30" />
+                                                </Grid.ColumnDefinitions>
+                                                <Path Name="Arrow" Grid.Column="1" Fill="#718096" HorizontalAlignment="Center" VerticalAlignment="Center" Data="M 0 0 L 4 4 L 8 0 Z"/>
+                                            </Grid>
+                                        </Border>
+                                        <ControlTemplate.Triggers>
+                                            <Trigger Property="IsMouseOver" Value="true">
+                                                <Setter TargetName="Border" Property="Background" Value="#2D3748"/>
+                                                <Setter TargetName="Border" Property="BorderBrush" Value="#4A5568"/>
+                                                <Setter TargetName="Arrow" Property="Fill" Value="White"/>
+                                            </Trigger>
+                                            <Trigger Property="IsChecked" Value="true">
+                                                <Setter TargetName="Border" Property="Background" Value="#2D3748"/>
+                                                <Setter TargetName="Border" Property="BorderBrush" Value="#6366F1"/>
+                                                <Setter TargetName="Arrow" Property="Fill" Value="White"/>
+                                            </Trigger>
+                                        </ControlTemplate.Triggers>
+                                    </ControlTemplate>
+                                </ToggleButton.Template>
+                            </ToggleButton>
+                            <ContentPresenter Name="ContentSite" IsHitTestVisible="False" Content="{TemplateBinding SelectionBoxItem}"
+                                              ContentTemplate="{TemplateBinding SelectionBoxItemTemplate}"
+                                              ContentTemplateSelector="{TemplateBinding ItemTemplateSelector}"
+                                              Margin="12,0,30,0" VerticalAlignment="Center" HorizontalAlignment="Left" />
+                            <Popup Name="Popup" Placement="Bottom" IsOpen="{TemplateBinding IsDropDownOpen}" AllowsTransparency="True" Focusable="False" PopupAnimation="Slide">
+                                <Grid Name="DropDown" SnapsToDevicePixels="True" MinWidth="{TemplateBinding ActualWidth}" MaxHeight="{TemplateBinding MaxDropDownHeight}">
+                                    <Border Name="DropDownBorder" Background="#1A202C" BorderBrush="#2D3748" BorderThickness="1" CornerRadius="8" Margin="0,4,0,4">
+                                        <Border.Effect>
+                                            <DropShadowEffect Color="Black" BlurRadius="8" ShadowDepth="2" Opacity="0.3"/>
+                                        </Border.Effect>
+                                        <ScrollViewer Margin="2" SnapsToDevicePixels="True">
+                                            <StackPanel IsItemsHost="True" KeyboardNavigation.DirectionalNavigation="Contained" />
+                                        </ScrollViewer>
+                                    </Border>
+                                </Grid>
+                            </Popup>
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- Weekday Bubble Style (Mind-blowing circular pills!) -->
+        <Style x:Key="DayToggleBubble" TargetType="CheckBox">
+            <Setter Property="Width" Value="34"/>
+            <Setter Property="Height" Value="34"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="CheckBox">
+                        <Border Name="BubbleBorder" Background="Transparent" BorderBrush="#22ffffff" BorderThickness="1" CornerRadius="17">
+                            <ContentPresenter Name="ContentHost" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="BubbleBorder" Property="Background" Value="#0Dffffff"/>
+                                <Setter TargetName="BubbleBorder" Property="BorderBrush" Value="#44ffffff"/>
+                            </Trigger>
+                            <Trigger Property="IsChecked" Value="True">
+                                <Setter TargetName="BubbleBorder" Property="Background" Value="#6366F1"/>
+                                <Setter TargetName="BubbleBorder" Property="BorderBrush" Value="#6366F1"/>
+                                <Setter Property="Foreground" Value="White"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- Save Button (Accent gradient feel) -->
         <Style x:Key="ActionBtn" TargetType="Button">
-            <Setter Property="Background" Value="#8B5CF6"/>
+            <Setter Property="Background" Value="#6366F1"/>
             <Setter Property="Foreground" Value="White"/>
             <Setter Property="FontWeight" Value="SemiBold"/>
-            <Setter Property="FontSize" Value="14"/>
-            <Setter Property="Padding" Value="20,10"/>
+            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="Padding" Value="24,10"/>
             <Setter Property="BorderThickness" Value="0"/>
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="Button">
-                        <Border Name="Border" Background="{TemplateBinding Background}" CornerRadius="6">
+                        <Border Name="Border" Background="{TemplateBinding Background}" CornerRadius="20">
                             <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
                         </Border>
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsMouseOver" Value="True">
-                                <Setter TargetName="Border" Property="Background" Value="#7C3AED"/>
+                                <Setter TargetName="Border" Property="Background" Value="#4F46E5"/>
                             </Trigger>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
@@ -78,25 +215,27 @@
             </Setter>
         </Style>
 
+        <!-- Secondary Button (Outline) -->
         <Style x:Key="SecondaryBtn" TargetType="Button">
             <Setter Property="Background" Value="Transparent"/>
             <Setter Property="Foreground" Value="#94A3B8"/>
             <Setter Property="BorderBrush" Value="#334155"/>
             <Setter Property="BorderThickness" Value="1"/>
-            <Setter Property="FontSize" Value="14"/>
-            <Setter Property="Padding" Value="20,10"/>
+            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="Padding" Value="24,10"/>
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="Button">
                         <Border Name="Border" Background="{TemplateBinding Background}" 
                                 BorderBrush="{TemplateBinding BorderBrush}" 
-                                BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="6">
+                                BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="20">
                             <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
                         </Border>
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsMouseOver" Value="True">
                                 <Setter TargetName="Border" Property="Background" Value="#1E293B"/>
                                 <Setter Property="Foreground" Value="White"/>
+                                <Setter TargetName="Border" Property="BorderBrush" Value="#475569"/>
                             </Trigger>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
@@ -105,98 +244,132 @@
         </Style>
     </Window.Resources>
 
-    <Grid Margin="24">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/> <!-- Title -->
-            <RowDefinition Height="*"/>    <!-- Scrollable Fields -->
-            <RowDefinition Height="Auto"/> <!-- Buttons -->
-        </Grid.RowDefinitions>
+    <!-- Glassmorphic Outer Border -->
+    <Border BorderBrush="#1Fffffff" BorderThickness="1" CornerRadius="16" ClipToBounds="True">
+        <Border.Background>
+            <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                <GradientStop Color="#0D0B1A" Offset="0.0"/>
+                <GradientStop Color="#121021" Offset="1.0"/>
+            </LinearGradientBrush>
+        </Border.Background>
 
-        <!-- Title -->
-        <TextBlock Name="TitleText" Grid.Row="0" Text="Add New Alarm" Foreground="White" FontSize="20" FontWeight="Bold" Margin="0,0,0,20"/>
+        <Grid Margin="24">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="35"/> <!-- Header Title Row -->
+                <RowDefinition Height="*"/>   <!-- Main Fields Row -->
+                <RowDefinition Height="55"/>  <!-- Save/Cancel Row -->
+            </Grid.RowDefinitions>
 
-        <!-- Form fields -->
-        <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" Margin="0,0,0,20">
-            <StackPanel>
-                <!-- Time Selection -->
-                <TextBlock Text="Time (HH:MM)" Style="{StaticResource FormLabel}"/>
-                <Grid Margin="0,0,0,16">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="Auto"/>
-                        <ColumnDefinition Width="*"/>
-                    </Grid.ColumnDefinitions>
+            <!-- Custom Drag Bar/Header -->
+            <Grid Grid.Row="0" Background="Transparent" MouseLeftButtonDown="TitleBar_MouseLeftButtonDown">
+                <TextBlock Name="TitleText" Text="Add New Alarm" Foreground="White" FontSize="16" FontWeight="Bold" VerticalAlignment="Center"/>
+            </Grid>
+
+            <!-- Gorgeous Two-Column Form Layout -->
+            <Grid Grid.Row="1" Margin="0,15,0,10">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*"/> <!-- Left Form Column -->
+                    <ColumnDefinition Width="1*"/> <!-- Right Form Column -->
+                </Grid.ColumnDefinitions>
+
+                <!-- ================= LEFT COLUMN: TIME & LABEL & SOUND ================= -->
+                <StackPanel Grid.Column="0" Margin="0,0,20,0">
+                    <!-- Modern Time Selection Widget -->
+                    <TextBlock Text="SET TIME (Type or Scroll Mouse Wheel)" Style="{StaticResource FormLabel}"/>
+                    <Grid Margin="0,0,0,18" HorizontalAlignment="Left">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/> <!-- Hours -->
+                            <ColumnDefinition Width="Auto"/> <!-- Colon -->
+                            <ColumnDefinition Width="Auto"/> <!-- Minutes -->
+                        </Grid.ColumnDefinitions>
+                        
+                        <TextBox Name="HourTextBox" Grid.Column="0" MaxLength="2" Style="{StaticResource DigitalTimeTextBox}"
+                                 PreviewMouseWheel="HourTextBox_PreviewMouseWheel" PreviewTextInput="NumericTextBox_PreviewTextInput"/>
+                        
+                        <TextBlock Grid.Column="1" Text=":" Foreground="#8B5CF6" FontSize="26" FontWeight="Bold" Margin="10,0" VerticalAlignment="Center"/>
+                        
+                        <TextBox Name="MinuteTextBox" Grid.Column="2" MaxLength="2" Style="{StaticResource DigitalTimeTextBox}"
+                                 PreviewMouseWheel="MinuteTextBox_PreviewMouseWheel" PreviewTextInput="NumericTextBox_PreviewTextInput"/>
+                    </Grid>
+
+                    <!-- Label -->
+                    <TextBlock Text="ALARM LABEL" Style="{StaticResource FormLabel}"/>
+                    <TextBox Name="LabelTextBox" Style="{StaticResource DialogTextBox}" Text="Wake Up!" Margin="0,0,0,18"/>
+
+                    <!-- Custom Sound -->
+                    <TextBlock Text="ALARM SOUND (.mp3, .wav)" Style="{StaticResource FormLabel}"/>
+                    <Grid Margin="0,0,0,8">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        
+                        <TextBox Name="SoundPathTextBox" Style="{StaticResource DialogTextBox}" Margin="0,0,8,0" VerticalAlignment="Center"/>
+                        <Button Content="Browse" Grid.Column="1" Style="{StaticResource SecondaryBtn}" Padding="12,6" Click="BrowseSound_Click" Height="36" VerticalAlignment="Center"/>
+                    </Grid>
                     
-                    <ComboBox Name="HourComboBox" Grid.Column="0" Height="40" Padding="8" Background="#1E293B" BorderBrush="#334155"/>
-                    <TextBlock Grid.Column="1" Text=":" Foreground="White" FontSize="20" FontWeight="Bold" Margin="10,0" VerticalAlignment="Center"/>
-                    <ComboBox Name="MinuteComboBox" Grid.Column="2" Height="40" Padding="8" Background="#1E293B" BorderBrush="#334155"/>
-                </Grid>
+                    <!-- Sound Warning message -->
+                    <TextBlock Name="SoundWarningText" Text="" Foreground="#F43F5E" FontSize="11" Margin="0,0,0,0" Visibility="Collapsed" TextWrapping="Wrap" LineHeight="14"/>
+                </StackPanel>
 
-                <!-- Label -->
-                <TextBlock Text="Label" Style="{StaticResource FormLabel}"/>
-                <TextBox Name="LabelTextBox" Style="{StaticResource DialogTextBox}" Text="Wake Up!" Margin="0,0,0,16"/>
+                <!-- ================= RIGHT COLUMN: DIFFICULTY & STREAK & DAYS ================= -->
+                <StackPanel Grid.Column="1" Margin="20,0,0,0">
+                    <!-- Difficulty -->
+                    <TextBlock Text="CHALLENGE DIFFICULTY" Style="{StaticResource FormLabel}"/>
+                    <ComboBox Name="DifficultyComboBox" Height="38" Margin="0,0,0,18" Style="{StaticResource DialogComboBox}" SelectionChanged="DifficultyComboBox_SelectionChanged">
+                        <ComboBoxItem Content="Easy" IsSelected="True"/>
+                        <ComboBoxItem Content="Medium"/>
+                        <ComboBoxItem Content="Hard"/>
+                    </ComboBox>
 
-                <!-- Difficulty -->
-                <TextBlock Text="Challenge Difficulty" Style="{StaticResource FormLabel}"/>
-                <ComboBox Name="DifficultyComboBox" Height="40" Margin="0,0,0,16" Padding="8" Background="#1E293B" BorderBrush="#334155" SelectionChanged="DifficultyComboBox_SelectionChanged">
-                    <ComboBoxItem Content="Easy" IsSelected="True"/>
-                    <ComboBoxItem Content="Medium"/>
-                    <ComboBoxItem Content="Hard"/>
-                </ComboBox>
+                    <!-- Required Streak -->
+                    <TextBlock Text="CHALLENGE REQUIRED STREAK" Style="{StaticResource FormLabel}"/>
+                    <ComboBox Name="RequiredStreakComboBox" Height="38" Margin="0,0,0,18" Style="{StaticResource DialogComboBox}">
+                        <ComboBoxItem Content="1"/>
+                        <ComboBoxItem Content="2"/>
+                        <ComboBoxItem Content="3"/>
+                        <ComboBoxItem Content="4"/>
+                        <ComboBoxItem Content="5"/>
+                        <ComboBoxItem Content="6"/>
+                        <ComboBoxItem Content="7"/>
+                        <ComboBoxItem Content="8"/>
+                        <ComboBoxItem Content="9"/>
+                        <ComboBoxItem Content="10"/>
+                    </ComboBox>
 
-                <!-- Required Streak -->
-                <TextBlock Text="Challenge Required Streak" Style="{StaticResource FormLabel}"/>
-                <ComboBox Name="RequiredStreakComboBox" Height="40" Margin="0,0,0,16" Padding="8" Background="#1E293B" BorderBrush="#334155">
-                    <ComboBoxItem Content="1"/>
-                    <ComboBoxItem Content="2"/>
-                    <ComboBoxItem Content="3"/>
-                    <ComboBoxItem Content="4"/>
-                    <ComboBoxItem Content="5"/>
-                    <ComboBoxItem Content="6"/>
-                    <ComboBoxItem Content="7"/>
-                    <ComboBoxItem Content="8"/>
-                    <ComboBoxItem Content="9"/>
-                    <ComboBoxItem Content="10"/>
-                </ComboBox>
+                    <!-- Repeat Days (Circular bubbles!) -->
+                    <TextBlock Text="REPEAT DAYS" Style="{StaticResource FormLabel}"/>
+                    <Grid Margin="0,0,0,0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <CheckBox Name="ChkMon" Grid.Column="0" Content="M" Style="{StaticResource DayToggleBubble}" Foreground="#64748B" FontSize="11" FontWeight="Bold"/>
+                        <CheckBox Name="ChkTue" Grid.Column="1" Content="T" Style="{StaticResource DayToggleBubble}" Foreground="#64748B" FontSize="11" FontWeight="Bold"/>
+                        <CheckBox Name="ChkWed" Grid.Column="2" Content="W" Style="{StaticResource DayToggleBubble}" Foreground="#64748B" FontSize="11" FontWeight="Bold"/>
+                        <CheckBox Name="ChkThu" Grid.Column="3" Content="T" Style="{StaticResource DayToggleBubble}" Foreground="#64748B" FontSize="11" FontWeight="Bold"/>
+                        <CheckBox Name="ChkFri" Grid.Column="4" Content="F" Style="{StaticResource DayToggleBubble}" Foreground="#64748B" FontSize="11" FontWeight="Bold"/>
+                        <CheckBox Name="ChkSat" Grid.Column="5" Content="S" Style="{StaticResource DayToggleBubble}" Foreground="#64748B" FontSize="11" FontWeight="Bold"/>
+                        <CheckBox Name="ChkSun" Grid.Column="6" Content="S" Style="{StaticResource DayToggleBubble}" Foreground="#64748B" FontSize="11" FontWeight="Bold"/>
+                    </Grid>
+                </StackPanel>
+            </Grid>
 
-                <!-- Repeat Days -->
-                <TextBlock Text="Repeat Days" Style="{StaticResource FormLabel}"/>
-                <WrapPanel Margin="0,0,0,16">
-                    <CheckBox Name="ChkMon" Content="Mon" Foreground="White" Margin="0,0,12,6"/>
-                    <CheckBox Name="ChkTue" Content="Tue" Foreground="White" Margin="0,0,12,6"/>
-                    <CheckBox Name="ChkWed" Content="Wed" Foreground="White" Margin="0,0,12,6"/>
-                    <CheckBox Name="ChkThu" Content="Thu" Foreground="White" Margin="0,0,12,6"/>
-                    <CheckBox Name="ChkFri" Content="Fri" Foreground="White" Margin="0,0,12,6"/>
-                    <CheckBox Name="ChkSat" Content="Sat" Foreground="White" Margin="0,0,12,6"/>
-                    <CheckBox Name="ChkSun" Content="Sun" Foreground="White" Margin="0,0,12,6"/>
-                </WrapPanel>
-
-                <!-- Custom Sound -->
-                <TextBlock Text="Alarm Sound (.mp3, .wav)" Style="{StaticResource FormLabel}"/>
-                <Grid Margin="0,0,0,10">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="Auto"/>
-                    </Grid.ColumnDefinitions>
-                    
-                    <TextBox Name="SoundPathTextBox" Style="{StaticResource DialogTextBox}" Margin="0,0,10,0"/>
-                    <Button Content="Browse" Grid.Column="1" Style="{StaticResource SecondaryBtn}" Padding="12,8" Click="BrowseSound_Click"/>
-                </Grid>
+            <!-- Bottom Button Bar Row -->
+            <Grid Grid.Row="2" VerticalAlignment="Center">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
                 
-                <!-- Sound Warning message -->
-                <TextBlock Name="SoundWarningText" Text="" Foreground="#F43F5E" FontSize="12" Margin="0,0,0,16" Visibility="Collapsed" TextWrapping="Wrap"/>
-            </StackPanel>
-        </ScrollViewer>
-
-        <!-- Action buttons -->
-        <Grid Grid.Row="2">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
-            </Grid.ColumnDefinitions>
-            
-            <Button Content="Cancel" Grid.Column="0" Style="{StaticResource SecondaryBtn}" Margin="0,0,8,0" Click="Cancel_Click"/>
-            <Button Content="Save Alarm" Grid.Column="1" Style="{StaticResource ActionBtn}" Margin="8,0,0,0" Click="Save_Click"/>
+                <Button Content="Cancel" Grid.Column="0" Style="{StaticResource SecondaryBtn}" Width="150" HorizontalAlignment="Left" Click="Cancel_Click" Height="36"/>
+                <Button Content="Save Alarm" Grid.Column="1" Style="{StaticResource ActionBtn}" Width="180" HorizontalAlignment="Right" Click="Save_Click" Height="36"/>
+            </Grid>
         </Grid>
-    </Grid>
+    </Border>
 </Window>

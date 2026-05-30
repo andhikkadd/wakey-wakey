@@ -9,7 +9,7 @@
         ResizeMode="NoResize"
         WindowState="Maximized"
         Topmost="True"
-        Background="#0F172A"
+        Background="#050409"
         WindowStartupLocation="CenterScreen"
         KeyDown="Window_KeyDown"
         Closing="Window_Closing"
@@ -17,28 +17,29 @@
         StateChanged="Window_StateChanged">
     
     <Window.Resources>
-        <!-- Custom styled glassmorphic buttons and inputs -->
+        <!-- Custom styled glassmorphic input for answer entry -->
         <Style x:Key="GlassTextBox" TargetType="TextBox">
-            <Setter Property="Background" Value="#1E293B"/>
+            <Setter Property="Background" Value="#0Affffff"/>
             <Setter Property="Foreground" Value="White"/>
-            <Setter Property="BorderBrush" Value="#475569"/>
+            <Setter Property="BorderBrush" Value="#22ffffff"/>
             <Setter Property="BorderThickness" Value="1"/>
-            <Setter Property="Padding" Value="12"/>
-            <Setter Property="FontSize" Value="24"/>
-            <Setter Property="CaretBrush" Value="#EC4899"/>
+            <Setter Property="Padding" Value="14"/>
+            <Setter Property="FontSize" Value="26"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="CaretBrush" Value="#A78BFA"/>
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="TextBox">
                         <Border Name="Border" Background="{TemplateBinding Background}" 
                                 BorderBrush="{TemplateBinding BorderBrush}" 
                                 BorderThickness="{TemplateBinding BorderThickness}" 
-                                CornerRadius="8">
+                                CornerRadius="12">
                             <ScrollViewer x:Name="PART_ContentHost" Margin="0"/>
                         </Border>
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsFocused" Value="True">
                                 <Setter TargetName="Border" Property="BorderBrush" Value="#8B5CF6"/>
-                                <Setter TargetName="Border" Property="Background" Value="#0F172A"/>
+                                <Setter Property="Background" Value="#15ffffff"/>
                             </Trigger>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
@@ -46,25 +47,26 @@
             </Setter>
         </Style>
 
+        <!-- Custom styled action button for submission -->
         <Style x:Key="GlassButton" TargetType="Button">
-            <Setter Property="Background" Value="#7C3AED"/>
+            <Setter Property="Background" Value="#8B5CF6"/>
             <Setter Property="Foreground" Value="White"/>
-            <Setter Property="FontWeight" Value="SemiBold"/>
-            <Setter Property="FontSize" Value="20"/>
-            <Setter Property="Padding" Value="16,10"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="FontSize" Value="18"/>
+            <Setter Property="Padding" Value="20,12"/>
             <Setter Property="BorderThickness" Value="0"/>
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="Button">
-                        <Border Name="Border" Background="{TemplateBinding Background}" CornerRadius="8">
+                        <Border Name="Border" Background="{TemplateBinding Background}" CornerRadius="12">
                             <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
                         </Border>
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsMouseOver" Value="True">
-                                <Setter TargetName="Border" Property="Background" Value="#6D28D9"/>
+                                <Setter TargetName="Border" Property="Background" Value="#7C3AED"/>
                             </Trigger>
                             <Trigger Property="IsPressed" Value="True">
-                                <Setter TargetName="Border" Property="Background" Value="#4C1D95"/>
+                                <Setter TargetName="Border" Property="Background" Value="#6D28D9"/>
                             </Trigger>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
@@ -72,18 +74,19 @@
             </Setter>
         </Style>
 
+        <!-- Minimalist Test Mode Exit button -->
         <Style x:Key="TestExitButton" TargetType="Button">
-            <Setter Property="Background" Value="#1E293B"/>
-            <Setter Property="Foreground" Value="#94A3B8"/>
-            <Setter Property="FontWeight" Value="Medium"/>
-            <Setter Property="FontSize" Value="14"/>
-            <Setter Property="Padding" Value="12,8"/>
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Foreground" Value="#64748B"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="Padding" Value="12,6"/>
             <Setter Property="BorderThickness" Value="1"/>
             <Setter Property="BorderBrush" Value="#334155"/>
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="Button">
-                        <Border Name="Border" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="6">
+                        <Border Name="Border" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="15">
                             <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
                         </Border>
                         <ControlTemplate.Triggers>
@@ -100,90 +103,116 @@
     </Window.Resources>
 
     <Grid>
-        <!-- Dark gradient background -->
+        <!-- Slow-pulsing ambient glow background -->
         <Grid.Background>
             <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
-                <GradientStop Color="#020617" Offset="0.0"/>
-                <GradientStop Color="#0F172A" Offset="0.5"/>
-                <GradientStop Color="#1E1B4B" Offset="1.0"/>
+                <GradientStop Color="#06050A" Offset="0"/>
+                <GradientStop Color="#0C0A15" Offset="0.5"/>
+                <GradientStop Color="#180C26" Offset="1"/>
             </LinearGradientBrush>
         </Grid.Background>
 
-        <!-- Test Mode Indicator (Top Right) -->
-        <StackPanel Name="TestModePanel" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="30" Visibility="Collapsed">
-            <TextBlock Text="[ TEST MODE ACTIVE ]" Foreground="#EC4899" FontSize="14" FontWeight="Bold" VerticalAlignment="Center" Margin="0,0,15,0"/>
-            <Button Content="Exit Test (ESC)" Style="{StaticResource TestExitButton}" Click="ExitTest_Click"/>
+        <!-- Background Ambient Lighting Effect (Pulsing Ellipse) -->
+        <Ellipse Width="800" Height="800" HorizontalAlignment="Center" VerticalAlignment="Center" Opacity="0.15" IsHitTestVisible="False">
+            <Ellipse.Fill>
+                <RadialGradientBrush>
+                    <GradientStop Color="#8B5CF6" Offset="0"/>
+                    <GradientStop Color="#00000000" Offset="0.8"/>
+                </RadialGradientBrush>
+            </Ellipse.Fill>
+            <Ellipse.Triggers>
+                <EventTrigger RoutedEvent="Loaded">
+                    <BeginStoryboard>
+                        <Storyboard RepeatBehavior="Forever">
+                            <DoubleAnimation Storyboard.TargetProperty="Opacity" From="0.1" To="0.25" Duration="0:0:5" AutoReverse="True"/>
+                            <DoubleAnimation Storyboard.TargetProperty="Width" From="700" To="900" Duration="0:0:6" AutoReverse="True"/>
+                            <DoubleAnimation Storyboard.TargetProperty="Height" From="700" To="900" Duration="0:0:6" AutoReverse="True"/>
+                        </Storyboard>
+                    </BeginStoryboard>
+                </EventTrigger>
+            </Ellipse.Triggers>
+        </Ellipse>
+
+        <!-- Test Mode Panel (Top Right) -->
+        <StackPanel Name="TestModePanel" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="40" Visibility="Collapsed">
+            <TextBlock Text="[ TESTING MODE ACTIVE ]" Foreground="#EC4899" FontSize="12" FontWeight="Black" VerticalAlignment="Center" Margin="0,0,15,0"/>
+            <Button Content="Exit Test Mode" Style="{StaticResource TestExitButton}" Click="ExitTest_Click" Height="30"/>
         </StackPanel>
 
-        <!-- Main Alarm Layout Container -->
+        <!-- MAIN LAYOUT WRAPPER -->
         <Grid HorizontalAlignment="Center" VerticalAlignment="Center">
             <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/> <!-- Alarm active label + Clock -->
+                <RowDefinition Height="Auto"/> <!-- Glass challenge card -->
+                <RowDefinition Height="Auto"/> <!-- Subtitle footer -->
             </Grid.RowDefinitions>
 
-            <!-- Title & Large Time -->
-            <StackPanel Grid.Row="0" HorizontalAlignment="Center" Margin="0,0,0,40">
-                <Border Background="#311042" BorderBrush="#EC4899" BorderThickness="1" CornerRadius="20" HorizontalAlignment="Center" Padding="15,6" Margin="0,0,0,15">
+            <!-- Large Elegant Clock area -->
+            <StackPanel Grid.Row="0" HorizontalAlignment="Center" Margin="0,0,0,30">
+                <!-- Glowing alarm badge -->
+                <Border BorderBrush="#F43F5E" BorderThickness="1" CornerRadius="15" HorizontalAlignment="Center" Padding="12,5" Margin="0,0,0,15">
+                    <Border.Background>
+                        <SolidColorBrush Color="#22F43F5E"/>
+                    </Border.Background>
                     <StackPanel Orientation="Horizontal">
-                        <Ellipse Width="8" Height="8" Fill="#EC4899" Margin="0,0,8,0">
+                        <Ellipse Width="6" Height="6" Fill="#F43F5E" Margin="0,0,8,0">
                             <Ellipse.Triggers>
                                 <EventTrigger RoutedEvent="Loaded">
                                     <BeginStoryboard>
                                         <Storyboard RepeatBehavior="Forever">
-                                            <DoubleAnimation Storyboard.TargetProperty="Opacity" From="0.2" To="1.0" Duration="0:0:0.6" AutoReverse="True"/>
+                                            <DoubleAnimation Storyboard.TargetProperty="Opacity" From="0.3" To="1.0" Duration="0:0:0.5" AutoReverse="True"/>
                                         </Storyboard>
                                     </BeginStoryboard>
                                 </EventTrigger>
                             </Ellipse.Triggers>
                         </Ellipse>
-                        <TextBlock Text="ALARM ACTIVE" Foreground="#F43F5E" FontWeight="SemiBold" FontSize="14"/>
+                        <TextBlock Text="ALARM ACTIVE" Foreground="#F43F5E" FontWeight="Black" FontSize="11"/>
                     </StackPanel>
                 </Border>
                 
-                <TextBlock Name="ClockText" Text="07:00" Foreground="White" FontSize="110" FontWeight="Thin" HorizontalAlignment="Center"/>
-                <TextBlock Name="LabelText" Text="Wake Up!" Foreground="#94A3B8" FontSize="20" FontWeight="Light" HorizontalAlignment="Center" Margin="0,5,0,0"/>
+                <!-- Huge, modern thin typography for clock -->
+                <TextBlock Name="ClockText" Text="07:00" Foreground="White" FontSize="120" FontWeight="ExtraLight" HorizontalAlignment="Center"/>
+                <!-- Alarm Label -->
+                <TextBlock Name="LabelText" Text="Wake Up!" Foreground="#94A3B8" FontSize="18" FontWeight="Light" HorizontalAlignment="Center" Margin="0,5,0,0"/>
             </StackPanel>
 
-            <!-- Math Challenge Card -->
-            <Border Grid.Row="1" Width="550" Background="#1E293B" BorderBrush="#334155" BorderThickness="1" CornerRadius="16" Padding="40" SnapsToDevicePixels="True">
+            <!-- Translucent glassmorphic challenge panel -->
+            <Border Grid.Row="1" Width="520" Background="#0Cffffff" BorderBrush="#15ffffff" BorderThickness="1" CornerRadius="24" Padding="35" SnapsToDevicePixels="True">
                 <Border.Effect>
-                    <DropShadowEffect Color="#000000" BlurRadius="40" Opacity="0.4" ShadowDepth="10"/>
+                    <DropShadowEffect Color="#000000" BlurRadius="50" Opacity="0.5" ShadowDepth="5"/>
                 </Border.Effect>
                 
                 <StackPanel>
-                    <TextBlock Text="Solve the challenge to dismiss the alarm:" Foreground="#94A3B8" FontSize="15" HorizontalAlignment="Center" Margin="0,0,0,25"/>
+                    <TextBlock Text="Solve the puzzle to disable the alarm" Foreground="#94A3B8" FontSize="13" HorizontalAlignment="Center" Margin="0,0,0,20" FontWeight="SemiBold"/>
 
-                    <!-- Streak indicator -->
+                    <!-- Streak circular indicators -->
                     <StackPanel Name="StreakPanel" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,25">
-                        <!-- Dynamic indicator items created in code-behind -->
+                        <!-- Instantiated dynamically in code-behind (e.g. rounded slate bubbles) -->
                     </StackPanel>
 
-                    <!-- The math question -->
-                    <TextBlock Name="QuestionText" Text="Loading question..." Foreground="White" FontSize="44" FontWeight="Bold" HorizontalAlignment="Center" Margin="0,0,0,30" TextAlignment="Center"/>
+                    <!-- The math question (Oversized, crisp styling) -->
+                    <TextBlock Name="QuestionText" Text="Loading..." Foreground="White" FontSize="46" FontWeight="ExtraBold" HorizontalAlignment="Center" Margin="0,0,0,25" TextAlignment="Center"/>
 
-                    <!-- Answer Input -->
-                    <Grid Margin="0,0,0,20">
+                    <Grid Margin="0,0,0,15">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="Auto"/>
                         </Grid.ColumnDefinitions>
                         
-                        <TextBox Name="AnswerTextBox" Grid.Column="0" Style="{StaticResource GlassTextBox}" Margin="0,0,12,0" 
-                                 KeyDown="AnswerTextBox_KeyDown" HorizontalContentAlignment="Center"/>
+                        <TextBox Name="AnswerTextBox" Grid.Column="0" Style="{StaticResource GlassTextBox}" Margin="0,0,10,0" 
+                                 KeyDown="AnswerTextBox_KeyDown" HorizontalContentAlignment="Center" VerticalAlignment="Center"/>
                         
                         <Button Name="SubmitButton" Grid.Column="1" Content="Submit" Style="{StaticResource GlassButton}" 
-                                Width="120" Click="Submit_Click"/>
+                                Width="120" Height="62" Click="Submit_Click" VerticalAlignment="Center"/>
                     </Grid>
 
-                    <!-- Feedback message -->
-                    <TextBlock Name="FeedbackText" Text="" Foreground="#F43F5E" FontSize="15" FontWeight="Medium" HorizontalAlignment="Center"/>
+                    <!-- User feedback message -->
+                    <TextBlock Name="FeedbackText" Text="" Foreground="#F43F5E" FontSize="14" FontWeight="Bold" HorizontalAlignment="Center" Margin="0,5,0,0"/>
                 </StackPanel>
             </Border>
 
             <!-- Safety notice -->
-            <TextBlock Grid.Row="2" Text="WakeyWakey Personal Productivity Tool" Foreground="#475569" FontSize="11" HorizontalAlignment="Center" Margin="0,30,0,0"/>
+            <TextBlock Grid.Row="2" Text="WakeyWakey Personal Productivity Suite" Foreground="#475569" FontSize="10" HorizontalAlignment="Center" Margin="0,25,0,0"/>
         </Grid>
     </Grid>
 </Window>
